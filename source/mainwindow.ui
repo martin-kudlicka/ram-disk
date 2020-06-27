@@ -13,7 +13,24 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QTreeView" name="disks">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>256</width>
+      <height>192</height>
+     </rect>
+    </property>
+    <property name="rootIsDecorated">
+     <bool>false</bool>
+    </property>
+    <property name="itemsExpandable">
+     <bool>false</bool>
+    </property>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
@@ -38,11 +55,17 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionAddRamDisk"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionE_xit">
    <property name="text">
     <string>E&amp;xit</string>
+   </property>
+  </action>
+  <action name="actionAddRamDisk">
+   <property name="text">
+    <string>&amp;Add</string>
    </property>
   </action>
  </widget>
