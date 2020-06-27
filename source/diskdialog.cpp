@@ -5,10 +5,8 @@ DiskDialog::DiskDialog(QWidget *parent) : DiskDialog(MUuidPtr::createUuid(), par
 {
 }
 
-DiskDialog::DiskDialog(const MUuidPtr &id, QWidget *parent) : QDialog(parent), _widgetSettings(&_options)
+DiskDialog::DiskDialog(const MUuidPtr &id, QWidget *parent) : QDialog(parent), _options(id), _widgetSettings(&_options)
 {
-  Q_UNUSED(id);
-
   _ui.setupUi(this);
 
   setupWidgets();

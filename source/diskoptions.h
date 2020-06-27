@@ -9,6 +9,12 @@ class DiskOptions : public MSettings
       static const QString Size;
       static const QString Letter;
     };
+
+             DiskOptions(const MUuidPtr &id);
+    virtual ~DiskOptions() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
+
+    private:
+      MUuidPtr _id;
 };
 
 #endif
