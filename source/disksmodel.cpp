@@ -15,21 +15,30 @@ int DisksModel::columnCount(const QModelIndex &parent /* QModelIndex() */) const
 
 QVariant DisksModel::data(const QModelIndex &index, int role /* Qt::DisplayRole */) const
 {
-  if (role != Qt::DisplayRole)
+  if (role != Qt::DisplayRole && role != Qt::CheckStateRole)
   {
     return QVariant();
   }
 
   auto rule = const_cast<Disks *>(&_disks)->get(index.internalId());
 
-  switch (index.column())
+  switch (role)
   {
-    case Column::Letter:
-      return rule->options().letter();
-    case Column::Size:
-      return rule->options().size();
-    default:
-      Q_ASSERT_X(false, "DisksModel::data", "switch (index.column())");
+    case Qt::DisplayRole:
+      switch (index.column())
+      {
+        case Column::Letter:
+          return rule->options().letter();
+        case Column::Size:
+          return rule->options().size();
+      }
+      break;
+    case Qt::CheckStateRole:
+      switch (index.column())
+      {
+        case Column::Enabled:
+          return rule->options().enabled() ? Qt::Checked : Qt::Unchecked;
+      }
   }
 
   return {};
@@ -44,6 +53,8 @@ QVariant DisksModel::headerData(int section, Qt::Orientation orientation, int ro
 
   switch (section)
   {
+    case Column::Enabled:
+      return {};
     case Column::Letter:
       return "Letter";
     case Column::Size:

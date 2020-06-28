@@ -13,6 +13,8 @@ MainWindow::MainWindow() : QMainWindow()
 void MainWindow::setupWidgets()
 {
   _ui.disks->setModel(&_disksModel);
+
+  _ui.disks->header()->setSectionResizeMode(static_cast<int>(DisksModel::Column::Enabled), QHeaderView::ResizeToContents);
 }
 
 void MainWindow::on_actionAddRamDisk_triggered(bool checked /* false */)
