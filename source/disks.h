@@ -1,6 +1,8 @@
 #ifndef DISKS_H
 #define DISKS_H
 
+#include "disk.h"
+
 class Disks
 {
   public:
@@ -11,12 +13,14 @@ class Disks
 
     Disks();
 
-    quintptr count  ()               const;
-    MUuidPtr id     (quintptr index) const;
-    bool     isEmpty()               const;
+          quintptr  count  ()               const;
+    const DiskSPtr &get    (const MUuidPtr &id);
+          MUuidPtr  id     (quintptr index) const;
+          bool      isEmpty()               const;
 
   private:
-    QSettings _settings;
+    QHash<MUuidPtr, DiskSPtr> _disks;
+    QSettings                 _settings;
 };
 
 #endif

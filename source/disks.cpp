@@ -13,6 +13,20 @@ quintptr Disks::count() const
   return _settings.childGroups().count();
 }
 
+const DiskSPtr &Disks::get(const MUuidPtr &id)
+{
+  Q_ASSERT_X(!id.isNull(), "Disks::get", "!id.isNull()");
+
+  if (_disks.contains(id))
+  {
+    return _disks[id];
+  }
+
+  auto disk = _disks.insert(id, QSharedPointer<Disk>::create(id));
+
+  return *disk;
+}
+
 MUuidPtr Disks::id(quintptr index) const
 {
   return _settings.childGroups().at(index);

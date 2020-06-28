@@ -94,6 +94,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="disk.cpp" />
     <ClCompile Include="diskdialog.cpp" />
     <ClCompile Include="diskoptions.cpp" />
     <ClCompile Include="disks.cpp" />
@@ -111,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="diskdialog.h" />
+    <ClInclude Include="disk.h" />
     <ClInclude Include="diskoptions.h" />
     <ClInclude Include="disks.h" />
     <ClInclude Include="disksmodel.h" />

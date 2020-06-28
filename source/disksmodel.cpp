@@ -10,10 +10,22 @@ int DisksModel::columnCount(const QModelIndex &parent /* QModelIndex() */) const
 
 QVariant DisksModel::data(const QModelIndex &index, int role /* Qt::DisplayRole */) const
 {
-  Q_UNUSED(index);
-  Q_UNUSED(role);
+  if (role != Qt::DisplayRole)
+  {
+    return QVariant();
+  }
 
-  // TODO
+  auto rule = const_cast<Disks *>(&_disks)->get(index.internalId());
+
+  switch (index.column())
+  {
+    case Column::Letter:
+      return rule->options().letter();
+    case Column::Size:
+      return rule->options().size();
+    default:
+      Q_ASSERT_X(false, "DisksModel::data", "switch (index.column())");
+  }
 
   return {};
 }

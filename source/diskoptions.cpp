@@ -11,3 +11,13 @@ DiskOptions::DiskOptions(const MUuidPtr& id) : _id(id)
   beginGroup(Disks::Property::Group);
   beginGroup(id.toString());
 }
+
+QChar DiskOptions::letter() const
+{
+  return value(Property::Letter).toChar();
+}
+
+quintptr DiskOptions::size() const
+{
+  return value(Property::Size).toUInt();
+}
