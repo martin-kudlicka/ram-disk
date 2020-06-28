@@ -18,6 +18,26 @@ QVariant DisksModel::data(const QModelIndex &index, int role /* Qt::DisplayRole 
   return {};
 }
 
+QVariant DisksModel::headerData(int section, Qt::Orientation orientation, int role /* Qt::DisplayRole */) const
+{
+  if (orientation == Qt::Orientation::Vertical || role != Qt::DisplayRole)
+  {
+    return QVariant();
+  }
+
+  switch (section)
+  {
+    case Column::Letter:
+      return "Letter";
+    case Column::Size:
+      return "Size (MB)";
+    default:
+      Q_UNREACHABLE();
+  }
+
+  return QVariant();
+}
+
 QModelIndex DisksModel::index(int row, int column, const QModelIndex &parent /* QModelIndex() */) const
 {
   Q_UNUSED(parent);
