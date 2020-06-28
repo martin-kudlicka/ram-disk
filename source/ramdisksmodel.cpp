@@ -1,26 +1,26 @@
 #include "pch.h"
-#include "disksmodel.h"
+#include "ramdisksmodel.h"
 
-void DisksModel::remove(const QModelIndex &index)
+void RamDisksModel::remove(const QModelIndex &index)
 {
   removeRow(index.row());
 }
 
-int DisksModel::columnCount(const QModelIndex &parent /* QModelIndex() */) const
+int RamDisksModel::columnCount(const QModelIndex &parent /* QModelIndex() */) const
 {
   Q_UNUSED(parent);
 
   return static_cast<int>(Column::Count);
 }
 
-QVariant DisksModel::data(const QModelIndex &index, int role /* Qt::DisplayRole */) const
+QVariant RamDisksModel::data(const QModelIndex &index, int role /* Qt::DisplayRole */) const
 {
   if (role != Qt::DisplayRole && role != Qt::CheckStateRole)
   {
     return QVariant();
   }
 
-  auto rule = const_cast<Disks *>(&_disks)->get(index.internalId());
+  auto rule = const_cast<RamDisks *>(&_disks)->get(index.internalId());
 
   switch (role)
   {
@@ -44,7 +44,7 @@ QVariant DisksModel::data(const QModelIndex &index, int role /* Qt::DisplayRole 
   return {};
 }
 
-QVariant DisksModel::headerData(int section, Qt::Orientation orientation, int role /* Qt::DisplayRole */) const
+QVariant RamDisksModel::headerData(int section, Qt::Orientation orientation, int role /* Qt::DisplayRole */) const
 {
   if (orientation == Qt::Orientation::Vertical || role != Qt::DisplayRole)
   {
@@ -66,7 +66,7 @@ QVariant DisksModel::headerData(int section, Qt::Orientation orientation, int ro
   return QVariant();
 }
 
-QModelIndex DisksModel::index(int row, int column, const QModelIndex &parent /* QModelIndex() */) const
+QModelIndex RamDisksModel::index(int row, int column, const QModelIndex &parent /* QModelIndex() */) const
 {
   Q_UNUSED(parent);
 
@@ -78,14 +78,14 @@ QModelIndex DisksModel::index(int row, int column, const QModelIndex &parent /* 
   return createIndex(row, column, _disks.id(row));
 }
 
-QModelIndex DisksModel::parent(const QModelIndex &child) const
+QModelIndex RamDisksModel::parent(const QModelIndex &child) const
 {
   Q_UNUSED(child);
 
   return QModelIndex();
 }
 
-bool DisksModel::removeRows(int row, int count, const QModelIndex &parent /* QModelIndex() */)
+bool RamDisksModel::removeRows(int row, int count, const QModelIndex &parent /* QModelIndex() */)
 {
   beginRemoveRows(parent, row, row + count - 1);
 
@@ -96,7 +96,7 @@ bool DisksModel::removeRows(int row, int count, const QModelIndex &parent /* QMo
   return true;
 }
 
-int DisksModel::rowCount(const QModelIndex &parent /* QModelIndex() */) const
+int RamDisksModel::rowCount(const QModelIndex &parent /* QModelIndex() */) const
 {
   if (parent.isValid())
   {

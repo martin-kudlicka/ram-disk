@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ui_mainwindow.h"
-#include "disksmodel.h"
+#include "ramdisksmodel.h"
 
 class MainWindow : public QMainWindow
 {
@@ -12,7 +12,7 @@ class MainWindow : public QMainWindow
     virtual ~MainWindow() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
 
   private:
-    DisksModel          _disksModel;
+    RamDisksModel       _disksModel;
     Ui::MainWindowClass _ui;
 
     void setupWidgets();

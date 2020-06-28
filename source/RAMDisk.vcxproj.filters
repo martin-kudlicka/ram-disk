@@ -10,22 +10,22 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="diskdialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="diskoptions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="disksmodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="disks.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="disk.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="storages.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ramdisk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ramdiskdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ramdiskoptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ramdisks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ramdisksmodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <QtMoc Include="mainwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="diskdialog.h">
+    <QtMoc Include="ramdiskdialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -60,7 +60,7 @@
     <QtUic Include="mainwindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="diskdialog.ui">
+    <QtUic Include="ramdiskdialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -71,19 +71,19 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="diskoptions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="disksmodel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="disks.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="disk.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="storages.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ramdisk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ramdiskoptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ramdisks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ramdisksmodel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

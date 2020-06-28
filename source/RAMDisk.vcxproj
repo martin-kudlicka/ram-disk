@@ -94,18 +94,18 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="disk.cpp" />
-    <ClCompile Include="diskdialog.cpp" />
-    <ClCompile Include="diskoptions.cpp" />
-    <ClCompile Include="disks.cpp" />
-    <ClCompile Include="disksmodel.cpp" />
+    <ClCompile Include="ramdisk.cpp" />
+    <ClCompile Include="ramdiskdialog.cpp" />
+    <ClCompile Include="ramdiskoptions.cpp" />
+    <ClCompile Include="ramdisks.cpp" />
+    <ClCompile Include="ramdisksmodel.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="storages.cpp" />
     <QtRcc Include="mainwindow.qrc" />
-    <QtUic Include="diskdialog.ui" />
+    <QtUic Include="ramdiskdialog.ui" />
     <QtUic Include="mainwindow.ui" />
     <QtMoc Include="mainwindow.h" />
     <ClCompile Include="mainwindow.cpp" />
@@ -113,11 +113,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="storages.h" />
-    <QtMoc Include="diskdialog.h" />
-    <ClInclude Include="disk.h" />
-    <ClInclude Include="diskoptions.h" />
-    <ClInclude Include="disks.h" />
-    <ClInclude Include="disksmodel.h" />
+    <QtMoc Include="ramdiskdialog.h" />
+    <ClInclude Include="ramdisk.h" />
+    <ClInclude Include="ramdiskoptions.h" />
+    <ClInclude Include="ramdisks.h" />
+    <ClInclude Include="ramdisksmodel.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

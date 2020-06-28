@@ -1,19 +1,19 @@
 #include "pch.h"
-#include "disks.h"
+#include "ramdisks.h"
 
-const QString Disks::Property::Group = "disks";
+const QString RamDisks::Property::Group = "disks";
 
-Disks::Disks()
+RamDisks::RamDisks()
 {
   _settings.beginGroup(Property::Group);
 }
 
-quintptr Disks::count() const
+quintptr RamDisks::count() const
 {
   return _settings.childGroups().count();
 }
 
-const DiskSPtr &Disks::get(const MUuidPtr &id)
+const DiskSPtr &RamDisks::get(const MUuidPtr &id)
 {
   Q_ASSERT_X(!id.isNull(), "Disks::get", "!id.isNull()");
 
@@ -22,22 +22,22 @@ const DiskSPtr &Disks::get(const MUuidPtr &id)
     return _disks[id];
   }
 
-  auto disk = _disks.insert(id, QSharedPointer<Disk>::create(id));
+  auto disk = _disks.insert(id, QSharedPointer<RamDisk>::create(id));
 
   return *disk;
 }
 
-MUuidPtr Disks::id(quintptr index) const
+MUuidPtr RamDisks::id(quintptr index) const
 {
   return _settings.childGroups().at(index);
 }
 
-bool Disks::isEmpty() const
+bool RamDisks::isEmpty() const
 {
   return count() == 0;
 }
 
-void Disks::removeIndex(quintptr index)
+void RamDisks::removeIndex(quintptr index)
 {
   auto id2 = id(index);
 

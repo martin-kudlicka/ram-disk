@@ -1,9 +1,9 @@
-#ifndef DISKS_H
-#define DISKS_H
+#ifndef RAMDISKS_H
+#define RAMDISKS_H
 
-#include "disk.h"
+#include "ramdisk.h"
 
-class Disks
+class RamDisks
 {
   public:
     struct Property
@@ -11,7 +11,7 @@ class Disks
       static const QString Group;
     };
 
-    Disks();
+    RamDisks();
 
           quintptr  count      ()               const;
     const DiskSPtr &get        (const MUuidPtr &id);

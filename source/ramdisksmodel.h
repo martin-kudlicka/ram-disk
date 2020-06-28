@@ -1,9 +1,9 @@
-#ifndef DISKSMODEL_H
-#define DISKSMODEL_H
+#ifndef RAMDISKSMODEL_H
+#define RAMDISKSMODEL_H
 
-#include "disks.h"
+#include "ramdisks.h"
 
-class DisksModel : public QAbstractItemModel
+class RamDisksModel : public QAbstractItemModel
 {
   public:
     enum class Column
@@ -14,12 +14,12 @@ class DisksModel : public QAbstractItemModel
       Count
     };
 
-    virtual ~DisksModel() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
+    virtual ~RamDisksModel() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
 
     void remove(const QModelIndex &index);
 
   private:
-    Disks _disks;
+    RamDisks _disks;
 
     virtual int         columnCount(const QModelIndex &parent = QModelIndex())                            const Q_DECL_OVERRIDE;
     virtual QVariant    data       (const QModelIndex &index, int role = Qt::DisplayRole)                 const Q_DECL_OVERRIDE;

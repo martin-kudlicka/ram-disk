@@ -1,7 +1,7 @@
-#ifndef DISKOPTIONS_H
-#define DISKOPTIONS_H
+#ifndef RAMDISKOPTIONS_H
+#define RAMDISKOPTIONS_H
 
-class DiskOptions : public MSettings
+class RamDiskOptions : public MSettings
 {
   public:
     struct Property
@@ -12,12 +12,12 @@ class DiskOptions : public MSettings
       static const QString Storage;
     };
 
-             DiskOptions(const MUuidPtr &id);
-    virtual ~DiskOptions() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
+             RamDiskOptions(const MUuidPtr &id);
+    virtual ~RamDiskOptions() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
 
-    QString  drive()   const;
+    QString  drive  () const;
     bool     enabled() const;
-    quintptr size  ()  const;
+    quintptr size   () const;
 
     private:
       MUuidPtr _id;
