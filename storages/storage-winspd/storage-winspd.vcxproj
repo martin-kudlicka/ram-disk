@@ -37,10 +37,12 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\..\..\..\property-sheets\build settings.props" />
+    <Import Project="..\..\..\..\3rdparty\winspd\winspd.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\..\..\..\property-sheets\build settings.props" />
+    <Import Project="..\..\..\..\3rdparty\winspd\winspd.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
@@ -95,6 +97,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtMoc Include="..\storageinterface.h" />
+    <ClInclude Include="..\..\common\ramdiskinterface.h" />
     <ClInclude Include="pch.h" />
     <QtMoc Include="storage-winspd.h" />
     <ClCompile Include="pch.cpp">

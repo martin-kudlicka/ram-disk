@@ -10,9 +10,10 @@ class StorageWinSpd : public StorageInterface
   Q_INTERFACES(StorageInterface)
 
   private:
-    virtual QString name();
-    virtual void start  ();
-    virtual void stop   ();
+    virtual ~StorageWinSpd() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
+
+    virtual RamDiskInterfaceSPtr create(const RamDiskParameters &parameters) const;
+    virtual QString              name  ()                                    const;
 };
 
 #endif
