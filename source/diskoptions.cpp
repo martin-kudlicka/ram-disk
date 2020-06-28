@@ -6,6 +6,7 @@
 const QString DiskOptions::Property::Enabled = "enabled";
 const QString DiskOptions::Property::Drive   = "drive";
 const QString DiskOptions::Property::Size    = "size";
+const QString DiskOptions::Property::Storage = "storage";
 
 DiskOptions::DiskOptions(const MUuidPtr& id) : _id(id)
 {

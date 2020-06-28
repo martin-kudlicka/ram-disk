@@ -36,3 +36,11 @@ bool Disks::isEmpty() const
 {
   return count() == 0;
 }
+
+void Disks::removeIndex(quintptr index)
+{
+  auto id2 = id(index);
+
+  _disks.remove(id2);
+  _settings.remove(id2.toString());
+}

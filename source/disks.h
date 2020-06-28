@@ -13,10 +13,11 @@ class Disks
 
     Disks();
 
-          quintptr  count  ()               const;
-    const DiskSPtr &get    (const MUuidPtr &id);
-          MUuidPtr  id     (quintptr index) const;
-          bool      isEmpty()               const;
+          quintptr  count      ()               const;
+    const DiskSPtr &get        (const MUuidPtr &id);
+          MUuidPtr  id         (quintptr index) const;
+          bool      isEmpty    ()               const;
+          void      removeIndex(quintptr index);
 
   private:
     QHash<MUuidPtr, DiskSPtr> _disks;

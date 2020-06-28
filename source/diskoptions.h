@@ -9,6 +9,7 @@ class DiskOptions : public MSettings
       static const QString Enabled;
       static const QString Drive;
       static const QString Size;
+      static const QString Storage;
     };
 
              DiskOptions(const MUuidPtr &id);

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "diskdialog.h"
 
+#include "storages.h"
+
 DiskDialog::DiskDialog(QWidget *parent) : DiskDialog(MUuidPtr::createUuid(), parent)
 {
 }
@@ -18,6 +20,7 @@ void DiskDialog::setupSettings()
   _widgetSettings.setWidget(DiskOptions::Property::Enabled, _ui.enabled);
   _widgetSettings.setWidget(DiskOptions::Property::Drive,   _ui.drive);
   _widgetSettings.setWidget(DiskOptions::Property::Size,    _ui.size);
+  _widgetSettings.setWidget(DiskOptions::Property::Storage, _ui.storage);
 
   _widgetSettings.load();
 }
@@ -28,6 +31,11 @@ void DiskDialog::setupWidgets()
   {
     auto drive = QString(letter) + ':';
     _ui.drive->addItem(drive, drive);
+  }
+
+  for (const auto &storage : gStorages->toRawList())
+  {
+    _ui.storage->addItem(storage->name(), storage->name());
   }
 }
 
