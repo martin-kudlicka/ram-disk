@@ -85,6 +85,17 @@ QModelIndex DisksModel::parent(const QModelIndex &child) const
   return QModelIndex();
 }
 
+bool DisksModel::removeRows(int row, int count, const QModelIndex &parent /* QModelIndex() */)
+{
+  beginRemoveRows(parent, row, row + count - 1);
+
+  _disks.removeIndex(row);
+
+  endRemoveRows();
+
+  return true;
+}
+
 int DisksModel::rowCount(const QModelIndex &parent /* QModelIndex() */) const
 {
   if (parent.isValid())
