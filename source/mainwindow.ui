@@ -56,6 +56,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionAddRamDisk"/>
+   <addaction name="actionRemoveRamDisk"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionE_xit">
@@ -66,6 +67,11 @@
   <action name="actionAddRamDisk">
    <property name="text">
     <string>&amp;Add</string>
+   </property>
+  </action>
+  <action name="actionRemoveRamDisk">
+   <property name="text">
+    <string>&amp;Remove</string>
    </property>
   </action>
  </widget>

@@ -27,3 +27,10 @@ void MainWindow::on_actionAddRamDisk_triggered(bool checked /* false */)
 
   // TODO
 }
+
+void MainWindow::on_actionRemoveRamDisk_triggered(bool checked /* false */)
+{
+  Q_UNUSED(checked);
+
+  _disksModel.remove(_ui.disks->currentIndex());
+}

@@ -15,6 +15,8 @@ class DisksModel : public QAbstractItemModel
 
     virtual ~DisksModel() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
 
+    void remove(const QModelIndex &index);
+
   private:
     Disks _disks;
 

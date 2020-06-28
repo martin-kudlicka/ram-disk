@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "disksmodel.h"
 
+void DisksModel::remove(const QModelIndex &index)
+{
+  removeRow(index.row());
+}
+
 int DisksModel::columnCount(const QModelIndex &parent /* QModelIndex() */) const
 {
   Q_UNUSED(parent);

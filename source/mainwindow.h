@@ -18,5 +18,6 @@ class MainWindow : public QMainWindow
     void setupWidgets();
 
   private Q_SLOTS:
-    void on_actionAddRamDisk_triggered(bool checked = false);
+    void on_actionAddRamDisk_triggered   (bool checked = false);
+    void on_actionRemoveRamDisk_triggered(bool checked = false);
 };
