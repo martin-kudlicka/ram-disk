@@ -96,6 +96,7 @@
   <ItemGroup>
     <ClCompile Include="diskdialog.cpp" />
     <ClCompile Include="diskoptions.cpp" />
+    <ClCompile Include="disks.cpp" />
     <ClCompile Include="disksmodel.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -111,6 +112,7 @@
   <ItemGroup>
     <QtMoc Include="diskdialog.h" />
     <ClInclude Include="diskoptions.h" />
+    <ClInclude Include="disks.h" />
     <ClInclude Include="disksmodel.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />

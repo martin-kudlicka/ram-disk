@@ -1,6 +1,8 @@
 #ifndef DISKSMODEL_H
 #define DISKSMODEL_H
 
+#include "disks.h"
+
 class DisksModel : public QAbstractItemModel
 {
   public:
@@ -14,6 +16,8 @@ class DisksModel : public QAbstractItemModel
     virtual ~DisksModel() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
 
   private:
+    Disks _disks;
+
     virtual int         columnCount(const QModelIndex &parent = QModelIndex())                            const Q_DECL_OVERRIDE;
     virtual QVariant    data       (const QModelIndex &index, int role = Qt::DisplayRole)                 const Q_DECL_OVERRIDE;
     virtual QVariant    headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;

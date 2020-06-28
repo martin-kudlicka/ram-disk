@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "diskoptions.h"
 
-const QString DiskOptions::Property::Size   = "size";
+#include "disks.h"
+
 const QString DiskOptions::Property::Letter = "letter";
+const QString DiskOptions::Property::Size   = "size";
 
 DiskOptions::DiskOptions(const MUuidPtr& id) : _id(id)
 {
-  beginGroup("disks");
+  beginGroup(Disks::Property::Group);
   beginGroup(id.toString());
 }

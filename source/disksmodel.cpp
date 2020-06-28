@@ -56,9 +56,10 @@ QModelIndex DisksModel::parent(const QModelIndex &child) const
 
 int DisksModel::rowCount(const QModelIndex &parent /* QModelIndex() */) const
 {
-  Q_UNUSED(parent);
+  if (parent.isValid())
+  {
+    return 0;
+  }
 
-  // TODO
-
-  return 0;
+  return _disks.count();
 }
