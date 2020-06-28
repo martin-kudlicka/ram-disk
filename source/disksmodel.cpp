@@ -42,9 +42,12 @@ QModelIndex DisksModel::index(int row, int column, const QModelIndex &parent /* 
 {
   Q_UNUSED(parent);
 
-  // TODO
+  if (_disks.isEmpty())
+  {
+    return createIndex(row, column);
+  }
 
-  return createIndex(row, column);
+  return createIndex(row, column, _disks.id(row));
 }
 
 QModelIndex DisksModel::parent(const QModelIndex &child) const

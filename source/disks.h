@@ -11,7 +11,9 @@ class Disks
 
     Disks();
 
-    quintptr count() const;
+    quintptr count  ()               const;
+    MUuidPtr id     (quintptr index) const;
+    bool     isEmpty()               const;
 
   private:
     QSettings _settings;
