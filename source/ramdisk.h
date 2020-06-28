@@ -2,6 +2,7 @@
 #define RAMDISK_H
 
 #include "ramdiskoptions.h"
+#include "../common/ramdiskinterface.h"
 
 class RamDisk
 {
@@ -9,9 +10,12 @@ class RamDisk
     RamDisk(const MUuidPtr &id);
 
     RamDiskOptions &options();
+    void            start  ();
+    void            stop   ();
 
   private:
-    RamDiskOptions _options;
+    RamDiskInterfaceSPtr _disk;
+    RamDiskOptions       _options;
 };
 
 using DiskSPtr = QSharedPointer<RamDisk>;

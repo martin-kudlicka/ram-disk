@@ -42,6 +42,9 @@
     <Filter Include="Form Files">
       <UniqueIdentifier>{3720dea3-cd33-4e19-a50d-ef8abcd42708}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interface Files">
+      <UniqueIdentifier>{029e6326-6203-45b3-9be1-b26f66f2c568}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="mainwindow.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="ramdisksmodel.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\ramdiskinterface.h">
+      <Filter>Interface Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

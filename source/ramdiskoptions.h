@@ -18,6 +18,7 @@ class RamDiskOptions : public MSettings
     QString  drive  () const;
     bool     enabled() const;
     quintptr size   () const;
+    QString  storage() const;
 
     private:
       MUuidPtr _id;

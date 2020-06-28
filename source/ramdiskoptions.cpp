@@ -28,3 +28,8 @@ quintptr RamDiskOptions::size() const
 {
   return value(Property::Size).toUInt();
 }
+
+QString RamDiskOptions::storage() const
+{
+  return value(Property::Storage).toString();
+}

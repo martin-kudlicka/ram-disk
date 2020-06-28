@@ -112,6 +112,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\common\ramdiskinterface.h" />
     <ClInclude Include="storages.h" />
     <QtMoc Include="ramdiskdialog.h" />
     <ClInclude Include="ramdisk.h" />
