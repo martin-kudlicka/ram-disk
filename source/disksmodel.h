@@ -9,7 +9,7 @@ class DisksModel : public QAbstractItemModel
     enum class Column
     {
       Enabled,
-      Letter,
+      Drive,
       Size,
       Count
     };

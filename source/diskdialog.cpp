@@ -15,8 +15,9 @@ DiskDialog::DiskDialog(const MUuidPtr &id, QWidget *parent) : QDialog(parent), _
 
 void DiskDialog::setupSettings()
 {
-  _widgetSettings.setWidget(DiskOptions::Property::Size,   _ui.size);
-  _widgetSettings.setWidget(DiskOptions::Property::Letter, _ui.letter);
+  _widgetSettings.setWidget(DiskOptions::Property::Enabled, _ui.enabled);
+  _widgetSettings.setWidget(DiskOptions::Property::Drive,   _ui.drive);
+  _widgetSettings.setWidget(DiskOptions::Property::Size,    _ui.size);
 
   _widgetSettings.load();
 }
@@ -25,7 +26,8 @@ void DiskDialog::setupWidgets()
 {
   for (auto letter = 'A'; letter <= 'Z'; ++letter)
   {
-    _ui.letter->addItem(QString(letter));
+    auto drive = QString(letter) + ':';
+    _ui.drive->addItem(drive, drive);
   }
 }
 

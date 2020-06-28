@@ -7,15 +7,15 @@ class DiskOptions : public MSettings
     struct Property
     {
       static const QString Enabled;
-      static const QString Letter;
+      static const QString Drive;
       static const QString Size;
     };
 
              DiskOptions(const MUuidPtr &id);
     virtual ~DiskOptions() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
 
+    QString  drive()   const;
     bool     enabled() const;
-    QChar    letter()  const;
     quintptr size  ()  const;
 
     private:

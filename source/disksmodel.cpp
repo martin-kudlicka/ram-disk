@@ -27,8 +27,8 @@ QVariant DisksModel::data(const QModelIndex &index, int role /* Qt::DisplayRole 
     case Qt::DisplayRole:
       switch (index.column())
       {
-        case Column::Letter:
-          return rule->options().letter();
+        case Column::Drive:
+          return rule->options().drive();
         case Column::Size:
           return rule->options().size();
       }
@@ -55,8 +55,8 @@ QVariant DisksModel::headerData(int section, Qt::Orientation orientation, int ro
   {
     case Column::Enabled:
       return {};
-    case Column::Letter:
-      return "Letter";
+    case Column::Drive:
+      return "Drive";
     case Column::Size:
       return "Size (MB)";
     default:
