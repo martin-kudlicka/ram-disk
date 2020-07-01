@@ -1,6 +1,13 @@
 #include "pch.h"
 #include "ramdisksmodel.h"
 
+void RamDisksModel::insert(const MUuidPtr &id)
+{
+  auto row = _disks.index(id);
+
+  insertRow(row);
+}
+
 void RamDisksModel::remove(const QModelIndex &index)
 {
   removeRow(index.row());
@@ -76,6 +83,15 @@ QModelIndex RamDisksModel::index(int row, int column, const QModelIndex &parent 
   }
 
   return createIndex(row, column, _disks.id(row));
+}
+
+bool RamDisksModel::insertRows(int row, int count, const QModelIndex &parent /* QModelIndex() */)
+{
+  beginInsertRows(parent, row, row + count - 1);
+  // already added
+  endInsertRows();
+
+  return true;
 }
 
 QModelIndex RamDisksModel::parent(const QModelIndex &child) const

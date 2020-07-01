@@ -13,10 +13,11 @@ class RamDisks
 
     RamDisks();
 
-          quintptr  count      ()               const;
+          quintptr  count      ()                   const;
     const DiskSPtr &get        (const MUuidPtr &id);
-          MUuidPtr  id         (quintptr index) const;
-          bool      isEmpty    ()               const;
+          MUuidPtr  id         (quintptr index)     const;
+          quintptr  index      (const MUuidPtr &id) const;
+          bool      isEmpty    ()                   const;
           void      removeIndex(quintptr index);
 
   private:

@@ -21,11 +21,13 @@ void MainWindow::on_actionAddRamDisk_triggered(bool checked /* false */)
 {
   Q_UNUSED(checked);
 
-  RamDiskDialog diskDialog(this);
-  if (diskDialog.exec() == QDialog::Rejected)
+  RamDiskDialog ramDiskDialog(this);
+  if (ramDiskDialog.exec() == QDialog::Rejected)
   {
     return;
   }
+
+  _disksModel.insert(ramDiskDialog.options().id());
 
   // TODO
 }

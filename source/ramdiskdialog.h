@@ -13,6 +13,8 @@ class RamDiskDialog : public QDialog
              RamDiskDialog(const MUuidPtr &id, QWidget *parent);
     virtual ~RamDiskDialog() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
 
+    const RamDiskOptions &options() const;
+
   private:
     RamDiskOptions    _options;
     MWidgetSettings   _widgetSettings;

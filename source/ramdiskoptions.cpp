@@ -24,6 +24,11 @@ bool RamDiskOptions::enabled() const
   return value(Property::Enabled).toBool();
 }
 
+const MUuidPtr &RamDiskOptions::id() const
+{
+  return _id;
+}
+
 quintptr RamDiskOptions::size() const
 {
   return value(Property::Size).toUInt();
