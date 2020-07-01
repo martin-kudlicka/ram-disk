@@ -3,6 +3,7 @@
 
 #include "../common/ramdiskparameters.h"
 #include "storages.h"
+#include "log.h"
 
 RamDisk::RamDisk(const MUuidPtr &id) : _options(id)
 {
@@ -20,15 +21,23 @@ void RamDisk::start()
     if (storage->name() == _options.storage())
     {
       RamDiskParameters parameters;
-      // TODO
+      parameters.drive = _options.drive();
+      parameters.size  = _options.size();
+
       _disk = storage->create(parameters);
+
+      mCInfo(RAMDisk) << "RAM disk \"" << _options.drive() << "\" started";
+
+      return;
     }
   }
 
-  // TODO
+  mCCritical(RAMDisk) << "RAM disk \"" << _options.drive() << "\" failed to start";
 }
 
 void RamDisk::stop()
 {
   _disk.clear();
+
+  mCInfo(RAMDisk) << "RAM disk \"" << _options.drive() << "\" stopped";
 }

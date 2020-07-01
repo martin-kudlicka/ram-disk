@@ -28,6 +28,9 @@
     <ClCompile Include="ramdisksmodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="..\common\ramdiskinterface.h">
       <Filter>Interface Files</Filter>
+    </ClInclude>
+    <ClInclude Include="log.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

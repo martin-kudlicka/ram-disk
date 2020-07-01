@@ -3,6 +3,8 @@
 
 struct RamDiskParameters
 {
+  QString  drive;
+  quintptr size;
 };
 
 #endif

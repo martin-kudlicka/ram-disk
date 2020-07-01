@@ -94,6 +94,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="log.cpp" />
     <ClCompile Include="ramdisk.cpp" />
     <ClCompile Include="ramdiskdialog.cpp" />
     <ClCompile Include="ramdiskoptions.cpp" />
@@ -113,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\ramdiskinterface.h" />
+    <ClInclude Include="log.h" />
     <ClInclude Include="storages.h" />
     <QtMoc Include="ramdiskdialog.h" />
     <ClInclude Include="ramdisk.h" />
