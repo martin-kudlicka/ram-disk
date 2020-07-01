@@ -13,16 +13,16 @@ class RamDisks
 
     RamDisks();
 
-          quintptr  count      ()                   const;
-    const DiskSPtr &get        (const MUuidPtr &id);
-          MUuidPtr  id         (quintptr index)     const;
-          quintptr  index      (const MUuidPtr &id) const;
-          bool      isEmpty    ()                   const;
-          void      removeIndex(quintptr index);
+          quintptr     count      ()                   const;
+    const RamDiskSPtr &get        (const MUuidPtr &id);
+          MUuidPtr     id         (quintptr index)     const;
+          quintptr     index      (const MUuidPtr &id) const;
+          bool         isEmpty    ()                   const;
+          void         removeIndex(quintptr index);
 
   private:
-    QHash<MUuidPtr, DiskSPtr> _disks;
-    QSettings                 _settings;
+    QHash<MUuidPtr, RamDiskSPtr> _disks;
+    QSettings                    _settings;
 };
 
 #endif

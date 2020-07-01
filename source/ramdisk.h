@@ -18,6 +18,6 @@ class RamDisk
     RamDiskOptions       _options;
 };
 
-using DiskSPtr = QSharedPointer<RamDisk>;
+using RamDiskSPtr = QSharedPointer<RamDisk>;
 
 #endif

@@ -8,6 +8,11 @@ void RamDisksModel::insert(const MUuidPtr &id)
   insertRow(row);
 }
 
+RamDiskSPtr RamDisksModel::ramDisk(const MUuidPtr &id)
+{
+  return _disks.get(id);
+}
+
 void RamDisksModel::remove(const QModelIndex &index)
 {
   removeRow(index.row());

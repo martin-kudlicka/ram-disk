@@ -13,7 +13,7 @@ quintptr RamDisks::count() const
   return _settings.childGroups().count();
 }
 
-const DiskSPtr &RamDisks::get(const MUuidPtr &id)
+const RamDiskSPtr &RamDisks::get(const MUuidPtr &id)
 {
   Q_ASSERT_X(!id.isNull(), "Disks::get", "!id.isNull()");
 

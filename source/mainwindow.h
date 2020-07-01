@@ -12,7 +12,7 @@ class MainWindow : public QMainWindow
     virtual ~MainWindow() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
 
   private:
-    RamDisksModel       _disksModel;
+    RamDisksModel       _ramDisksModel;
     Ui::MainWindowClass _ui;
 
     void setupWidgets();

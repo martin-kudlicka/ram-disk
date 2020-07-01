@@ -12,7 +12,7 @@ MainWindow::MainWindow() : QMainWindow()
 
 void MainWindow::setupWidgets()
 {
-  _ui.disks->setModel(&_disksModel);
+  _ui.disks->setModel(&_ramDisksModel);
 
   _ui.disks->header()->setSectionResizeMode(static_cast<int>(RamDisksModel::Column::Enabled), QHeaderView::ResizeToContents);
 }
@@ -27,14 +27,18 @@ void MainWindow::on_actionAddRamDisk_triggered(bool checked /* false */)
     return;
   }
 
-  _disksModel.insert(ramDiskDialog.options().id());
+  _ramDisksModel.insert(ramDiskDialog.options().id());
 
-  // TODO
+  auto ramDisk = _ramDisksModel.ramDisk(ramDiskDialog.options().id());
+  if (ramDisk->options().enabled())
+  {
+    ramDisk->start();
+  }
 }
 
 void MainWindow::on_actionRemoveRamDisk_triggered(bool checked /* false */)
 {
   Q_UNUSED(checked);
 
-  _disksModel.remove(_ui.disks->currentIndex());
+  _ramDisksModel.remove(_ui.disks->currentIndex());
 }
