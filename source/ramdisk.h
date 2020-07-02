@@ -7,14 +7,15 @@
 class RamDisk
 {
   public:
-    RamDisk(const MUuidPtr &id);
+     RamDisk(const MUuidPtr &id);
+    ~RamDisk();
 
     RamDiskOptions &options();
     void            start  ();
     void            stop   ();
 
   private:
-    RamDiskInterfaceSPtr _disk;
+    RamDiskInterfaceSPtr _ramDisk;
     RamDiskOptions       _options;
 };
 

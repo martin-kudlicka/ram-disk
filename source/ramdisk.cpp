@@ -1,12 +1,19 @@
 #include "pch.h"
 #include "ramdisk.h"
 
-#include "../common/ramdiskparameters.h"
 #include "storages.h"
 #include "log.h"
 
 RamDisk::RamDisk(const MUuidPtr &id) : _options(id)
 {
+}
+
+RamDisk::~RamDisk()
+{
+  if (_ramDisk)
+  {
+    stop();
+  }
 }
 
 RamDiskOptions &RamDisk::options()
@@ -24,20 +31,37 @@ void RamDisk::start()
       parameters.drive = _options.drive();
       parameters.size  = _options.size();
 
-      _disk = storage->create(parameters);
+      _ramDisk = storage->create(parameters);
 
-      mCInfo(RAMDisk) << "RAM disk \"" << _options.drive() << "\" started";
-
-      return;
+      break;
     }
   }
 
-  mCCritical(RAMDisk) << "RAM disk \"" << _options.drive() << "\" failed to start";
+  if (!_ramDisk)
+  {
+    mCCritical(RAMDisk) << "RAM disk storage \"" << _options.storage() << "\" unavailable";
+
+    return;
+  }
+
+  auto ok = _ramDisk->start();
+  if (ok)
+  {
+    mCInfo(RAMDisk) << "RAM disk \"" << _options.drive() << "\" started";
+  }
+  else
+  {
+    mCCritical(RAMDisk) << "RAM disk \"" << _options.drive() << "\" failed to start";
+
+    _ramDisk.clear();
+  }
 }
 
 void RamDisk::stop()
 {
-  _disk.clear();
+  _ramDisk->stop();
 
   mCInfo(RAMDisk) << "RAM disk \"" << _options.drive() << "\" stopped";
+
+  _ramDisk.clear();
 }
