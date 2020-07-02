@@ -1,13 +1,11 @@
 #include "pch.h"
 #include "storage-winspd.h"
 
+#include "ramdisk-winspd.h"
+
 RamDiskInterfaceSPtr StorageWinSpd::create(const RamDiskParameters &parameters) const
 {
-  Q_UNUSED(parameters);
-
-  // TODO
-
-  return nullptr;
+  return QSharedPointer<RamDiskWinSpd>::create(parameters);
 }
 
 QString StorageWinSpd::name() const

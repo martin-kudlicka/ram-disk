@@ -1,0 +1,6 @@
+#ifndef STORAGEUNITINTERFACE_H
+#define STORAGEUNITINTERFACE_H
+
+extern SPD_STORAGE_UNIT_INTERFACE gStorageUnitInterface;
+
+#endif
