@@ -11,6 +11,7 @@ class RamDisk
     ~RamDisk();
 
     RamDiskOptions &options();
+    bool            running() const;
     void            start  ();
     void            stop   ();
 

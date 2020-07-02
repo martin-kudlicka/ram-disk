@@ -18,6 +18,7 @@ class RamDisksModel : public QAbstractItemModel
 
     void        insert (const MUuidPtr &id);
     RamDiskSPtr ramDisk(const MUuidPtr &id);
+    RamDiskSPtr ramDisk(const QModelIndex &index);
     void        remove (const QModelIndex &index);
 
   private:

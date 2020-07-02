@@ -21,6 +21,11 @@ RamDiskOptions &RamDisk::options()
   return _options;
 }
 
+bool RamDisk::running() const
+{
+  return _ramDisk;
+}
+
 void RamDisk::start()
 {
   for (const auto &storage : gStorages->toRawList())

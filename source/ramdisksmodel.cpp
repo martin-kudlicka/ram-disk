@@ -13,6 +13,11 @@ RamDiskSPtr RamDisksModel::ramDisk(const MUuidPtr &id)
   return _disks.get(id);
 }
 
+RamDiskSPtr RamDisksModel::ramDisk(const QModelIndex &index)
+{
+  return _disks.get(index.internalId());
+}
+
 void RamDisksModel::remove(const QModelIndex &index)
 {
   removeRow(index.row());

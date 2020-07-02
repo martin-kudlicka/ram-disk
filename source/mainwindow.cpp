@@ -40,5 +40,11 @@ void MainWindow::on_actionRemoveRamDisk_triggered(bool checked /* false */)
 {
   Q_UNUSED(checked);
 
+  auto ramDisk = _ramDisksModel.ramDisk(_ui.disks->currentIndex());
+  if (ramDisk->running())
+  {
+    ramDisk->stop();
+  }
+
   _ramDisksModel.remove(_ui.disks->currentIndex());
 }
