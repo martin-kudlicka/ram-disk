@@ -16,7 +16,36 @@ bool RamDiskWinSpd::read(LPCBYTE source, quintptr blockAddress, quintptr blockCo
   return copyBuffer(source, destination, blockCount * BlockLength, SCSI_ADSENSE_UNRECOVERED_ERROR, status);
 }
 
-bool RamDiskWinSpd::write(LPBYTE destination, quintptr blockAddress, quintptr blockCount, SPD_STORAGE_UNIT_STATUS *status)
+bool RamDiskWinSpd::unmap(const SPD_UNMAP_DESCRIPTOR *descriptors, quintptr count) const
+{
+  for (decltype(count) descriptorIndex = 0; descriptorIndex < count; ++descriptorIndex)
+  {
+    auto descriptor = &descriptors[descriptorIndex];
+
+    BOOLEAN setZero = FALSE;
+
+    /*if (false)
+    {
+      FILE_ZERO_DATA_INFORMATION Zero;
+      DWORD BytesTransferred;
+
+      Zero.FileOffset.QuadPart = descriptor->BlockAddress * BlockLength;
+      Zero.BeyondFinalZero.QuadPart = (descriptor->BlockAddress + descriptor->BlockCount) * BlockLength;
+      setZero = DeviceIoControl(RawDisk->Handle, FSCTL_SET_ZERO_DATA, &Zero, sizeof Zero, 0, 0, &BytesTransferred, 0);
+    }*/
+
+    if (!setZero)
+    {
+      auto source = _data.data() + descriptor->BlockAddress * BlockLength;
+
+      copyBuffer(source, nullptr, descriptor->BlockCount * BlockLength, SCSI_ADSENSE_NO_SENSE, nullptr);
+    }
+  }
+
+  return true;
+}
+
+bool RamDiskWinSpd::write(LPBYTE destination, quintptr blockAddress, quintptr blockCount, SPD_STORAGE_UNIT_STATUS *status) const
 {
   auto source = _data.data() + blockAddress * BlockLength;
 
