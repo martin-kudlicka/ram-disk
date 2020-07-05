@@ -37,14 +37,14 @@ BOOLEAN Read(SPD_STORAGE_UNIT *StorageUnit, PVOID Buffer, UINT64 BlockAddress, U
 
   auto ramDisk = static_cast<RamDiskWinSpd *>(StorageUnit->UserContext);
 
-  return ramDisk->read(static_cast<LPCBYTE>(Buffer), BlockAddress, BlockCount, Status);
+  return ramDisk->read(static_cast<LPBYTE>(Buffer), BlockAddress, BlockCount, Status);
 }
 
 BOOLEAN Write(SPD_STORAGE_UNIT *StorageUnit, PVOID Buffer, UINT64 BlockAddress, UINT32 BlockCount, BOOLEAN FlushFlag, SPD_STORAGE_UNIT_STATUS *Status)
 {
   auto ramDisk = static_cast<RamDiskWinSpd *>(StorageUnit->UserContext);
 
-  auto ok = ramDisk->write(static_cast<LPBYTE>(Buffer), BlockAddress, BlockCount, Status);
+  auto ok = ramDisk->write(static_cast<LPCBYTE>(Buffer), BlockAddress, BlockCount, Status);
 
   if (Status->ScsiStatus == SCSISTAT_GOOD && FlushFlag)
   {

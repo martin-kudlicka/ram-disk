@@ -9,14 +9,14 @@ RamDiskWinSpd::RamDiskWinSpd(const RamDiskParameters &parameters) : RamDiskInter
 {
 }
 
-bool RamDiskWinSpd::read(LPCBYTE source, quintptr blockAddress, quintptr blockCount, SPD_STORAGE_UNIT_STATUS *status)
+bool RamDiskWinSpd::read(LPBYTE destination, quintptr blockAddress, quintptr blockCount, SPD_STORAGE_UNIT_STATUS *status) const
 {
-  auto destination = _data.data() + blockAddress * BlockLength;
+  auto source = _data.data() + blockAddress * BlockLength;
 
   return copyBuffer(source, destination, blockCount * BlockLength, SCSI_ADSENSE_UNRECOVERED_ERROR, status);
 }
 
-bool RamDiskWinSpd::unmap(const SPD_UNMAP_DESCRIPTOR *descriptors, quintptr count) const
+bool RamDiskWinSpd::unmap(const SPD_UNMAP_DESCRIPTOR *descriptors, quintptr count)
 {
   for (decltype(count) descriptorIndex = 0; descriptorIndex < count; ++descriptorIndex)
   {
@@ -36,18 +36,18 @@ bool RamDiskWinSpd::unmap(const SPD_UNMAP_DESCRIPTOR *descriptors, quintptr coun
 
     if (!setZero)
     {
-      auto source = _data.data() + descriptor->BlockAddress * BlockLength;
+      auto destination = _data.data() + descriptor->BlockAddress * BlockLength;
 
-      copyBuffer(source, nullptr, descriptor->BlockCount * BlockLength, SCSI_ADSENSE_NO_SENSE, nullptr);
+      copyBuffer(nullptr, destination, descriptor->BlockCount * BlockLength, SCSI_ADSENSE_NO_SENSE, nullptr);
     }
   }
 
   return true;
 }
 
-bool RamDiskWinSpd::write(LPBYTE destination, quintptr blockAddress, quintptr blockCount, SPD_STORAGE_UNIT_STATUS *status) const
+bool RamDiskWinSpd::write(LPCBYTE source, quintptr blockAddress, quintptr blockCount, SPD_STORAGE_UNIT_STATUS *status)
 {
-  auto source = _data.data() + blockAddress * BlockLength;
+  auto destination = _data.data() + blockAddress * BlockLength;
 
   return copyBuffer(source, destination, blockCount * BlockLength, SCSI_ADSENSE_WRITE_ERROR, status);
 }

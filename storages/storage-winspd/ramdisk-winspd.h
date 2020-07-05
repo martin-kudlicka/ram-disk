@@ -9,9 +9,9 @@ class RamDiskWinSpd : public RamDiskInterface
              RamDiskWinSpd(const RamDiskParameters &parameters);
     virtual ~RamDiskWinSpd() Q_DECL_EQ_DEFAULT;
 
-    bool read(LPCBYTE source, quintptr blockAddress, quintptr blockCount, SPD_STORAGE_UNIT_STATUS *status);
-    bool unmap(const SPD_UNMAP_DESCRIPTOR *descriptors, quintptr count) const;
-    bool write(LPBYTE destination, quintptr blockAddress, quintptr blockCount, SPD_STORAGE_UNIT_STATUS *status) const;
+    bool read(LPBYTE source, quintptr blockAddress, quintptr blockCount, SPD_STORAGE_UNIT_STATUS *status) const;
+    bool unmap(const SPD_UNMAP_DESCRIPTOR *descriptors, quintptr count);
+    bool write(LPCBYTE destination, quintptr blockAddress, quintptr blockCount, SPD_STORAGE_UNIT_STATUS *status);
 
   private:
     QVector<BYTE>     _data;
