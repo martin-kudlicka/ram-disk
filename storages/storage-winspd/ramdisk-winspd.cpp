@@ -22,8 +22,8 @@ bool RamDiskWinSpd::start() const
   //storageUnitParams.UnmapSupported    = FALSE;
   storageUnitParams.MaxTransferLength = 64 * 1024;
 
-  auto rawDisk = new RawDisk();
-  rawDisk->parameters = _parameters;
+  auto rawDisk        = new RawDisk();
+  rawDisk->parameters = &_parameters;
   rawDisk->data       = static_cast<LPBYTE>(malloc(_parameters.size));
 
   if (rawDisk->data)

@@ -3,9 +3,9 @@
 
 struct RawDisk
 {
-  SPD_STORAGE_UNIT *storageUnit;
-  RamDiskParameters parameters;
-  LPBYTE            data;
+  SPD_STORAGE_UNIT        *storageUnit;
+  const RamDiskParameters *parameters;
+  LPBYTE                   data;
 
   RawDisk() : storageUnit(nullptr), data(nullptr)
   {
