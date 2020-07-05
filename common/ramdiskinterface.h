@@ -10,7 +10,7 @@ class RamDiskInterface
     {
     }
 
-    virtual bool start() const = 0;
+    virtual bool start()       = 0;
     virtual bool stop () const = 0;
 
   protected:

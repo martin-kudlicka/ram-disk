@@ -103,7 +103,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ramdisk-winspd.h" />
-    <ClInclude Include="rawdisk.h" />
     <ClInclude Include="storageunitinterface.h" />
     <QtMoc Include="..\storageinterface.h" />
     <ClInclude Include="..\..\common\ramdiskinterface.h" />

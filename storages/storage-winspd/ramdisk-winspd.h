@@ -10,7 +10,10 @@ class RamDiskWinSpd : public RamDiskInterface
     virtual ~RamDiskWinSpd() Q_DECL_EQ_DEFAULT;
 
   private:
-    virtual bool start() const Q_DECL_OVERRIDE;
+    QVector<BYTE>     _data;
+    SPD_STORAGE_UNIT *_storageUnit;
+
+    virtual bool start()       Q_DECL_OVERRIDE;
     virtual bool stop () const Q_DECL_OVERRIDE;
 };
 

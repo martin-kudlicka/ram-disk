@@ -27,9 +27,6 @@
     <ClInclude Include="storageunitinterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rawdisk.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
