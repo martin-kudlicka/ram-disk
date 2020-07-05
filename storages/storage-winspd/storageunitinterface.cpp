@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "storageunitinterface.h"
 
+#include "ramdisk-winspd.h"
+
 typedef struct _RAWDISK
 {
   SPD_STORAGE_UNIT *StorageUnit;
@@ -40,14 +42,9 @@ BOOLEAN Read(SPD_STORAGE_UNIT *StorageUnit, PVOID Buffer, UINT64 BlockAddress, U
     }
   }
 
-  /*RAWDISK *RawDisk = StorageUnit->UserContext;
-  PVOID FileBuffer = (PUINT8)RawDisk->Pointer + BlockAddress * RawDisk->BlockLength;
+  auto ramDisk = static_cast<RamDiskWinSpd *>(StorageUnit->UserContext);
 
-  CopyBuffer(StorageUnit,
-             Buffer, FileBuffer, BlockCount * RawDisk->BlockLength, SCSI_ADSENSE_UNRECOVERED_ERROR,
-             Status);*/
-
-  return TRUE;
+  return ramDisk->read(static_cast<LPCBYTE>(Buffer), BlockAddress, BlockCount, Status);
 }
 
 BOOLEAN Write(SPD_STORAGE_UNIT *StorageUnit, PVOID Buffer, UINT64 BlockAddress, UINT32 BlockCount, BOOLEAN FlushFlag, SPD_STORAGE_UNIT_STATUS *Status)

@@ -9,12 +9,18 @@ class RamDiskWinSpd : public RamDiskInterface
              RamDiskWinSpd(const RamDiskParameters &parameters);
     virtual ~RamDiskWinSpd() Q_DECL_EQ_DEFAULT;
 
+    bool read(LPCBYTE source, quintptr blockAddress, quintptr blockCount, SPD_STORAGE_UNIT_STATUS *status);
+
   private:
     QVector<BYTE>     _data;
     SPD_STORAGE_UNIT *_storageUnit;
 
+    bool copyBuffer(LPCBYTE source, LPBYTE destination, quintptr size, quint8 senseCode, SPD_STORAGE_UNIT_STATUS *status) const;
+
     virtual bool start() Q_DECL_OVERRIDE;
     virtual void stop () Q_DECL_OVERRIDE;
+
+    static BOOLEAN exceptionFilter(DWORD code, PEXCEPTION_POINTERS pointers, quintptr *dataAddress);
 };
 
 #endif

@@ -3,8 +3,53 @@
 
 #include "storageunitinterface.h"
 
+auto BlockLength = 4096;
+
 RamDiskWinSpd::RamDiskWinSpd(const RamDiskParameters &parameters) : RamDiskInterface(parameters), _storageUnit(nullptr)
 {
+}
+
+bool RamDiskWinSpd::read(LPCBYTE source, quintptr blockAddress, quintptr blockCount, SPD_STORAGE_UNIT_STATUS *status)
+{
+  auto destination = _data.data() + blockAddress * BlockLength;
+
+  return copyBuffer(source, destination, blockCount * BlockLength, SCSI_ADSENSE_UNRECOVERED_ERROR, status);
+}
+
+bool RamDiskWinSpd::copyBuffer(LPCBYTE source, LPBYTE destination, quintptr size, quint8 senseCode, SPD_STORAGE_UNIT_STATUS *status) const
+{
+  quintptr exceptionDataAddress = 0;
+
+  __try
+  {
+    if (source)
+    {
+      memcpy(destination, source, size);
+    }
+    else
+    {
+      memset(destination, 0, size);
+    }
+  }
+  __except (exceptionFilter(GetExceptionCode(), GetExceptionInformation(), &exceptionDataAddress))
+  {
+    if (status)
+    {
+      quint64 exceptionInformation;
+      quint64 *exceptionInformationPtr = nullptr;
+      if (exceptionDataAddress)
+      {
+        exceptionInformation    = (exceptionDataAddress - reinterpret_cast<quintptr>(_data.data())) / BlockLength;
+        exceptionInformationPtr = &exceptionInformation;
+      }
+
+      SpdStorageUnitStatusSetSense(status, SCSI_SENSE_MEDIUM_ERROR, senseCode, exceptionInformationPtr);
+    }
+
+    return false;
+  }
+
+  return true;
 }
 
 bool RamDiskWinSpd::start()
@@ -14,8 +59,8 @@ bool RamDiskWinSpd::start()
   SPD_STORAGE_UNIT_PARAMS storageUnitParams = {};
 
   UuidCreate(&storageUnitParams.Guid);
-  storageUnitParams.BlockCount  = sizeInBytes / 4096;
-  storageUnitParams.BlockLength = 4096;
+  storageUnitParams.BlockCount  = sizeInBytes / BlockLength;
+  storageUnitParams.BlockLength = BlockLength;
   lstrcpyA(reinterpret_cast<LPSTR>(storageUnitParams.ProductId),            "RAM Disk");
   lstrcpyA(reinterpret_cast<LPSTR>(storageUnitParams.ProductRevisionLevel), "0.1");
   storageUnitParams.WriteProtected    = TRUE;
@@ -43,4 +88,16 @@ void RamDiskWinSpd::stop()
   SpdStorageUnitDelete(_storageUnit);
 
   _data.clear();
+}
+
+BOOLEAN RamDiskWinSpd::exceptionFilter(DWORD code, PEXCEPTION_POINTERS pointers, quintptr *dataAddress)
+{
+  if (code != EXCEPTION_IN_PAGE_ERROR)
+  {
+    return EXCEPTION_CONTINUE_SEARCH;
+  }
+
+  *dataAddress = 2 <= pointers->ExceptionRecord->NumberParameters ? pointers->ExceptionRecord->ExceptionInformation[1] : 0;
+
+  return EXCEPTION_EXECUTE_HANDLER;
 }
