@@ -10,8 +10,8 @@ class RamDiskInterface
     {
     }
 
-    virtual bool start()       = 0;
-    virtual bool stop () const = 0;
+    virtual bool start() = 0;
+    virtual void stop () = 0;
 
   protected:
     RamDiskParameters _parameters;

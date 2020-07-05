@@ -38,9 +38,9 @@ bool RamDiskWinSpd::start()
   return false;
 }
 
-bool RamDiskWinSpd::stop() const
+void RamDiskWinSpd::stop()
 {
-  // TODO
+  SpdStorageUnitDelete(_storageUnit);
 
-  return true;
+  _data.clear();
 }
