@@ -26,13 +26,6 @@ BOOLEAN FlushInternal(SPD_STORAGE_UNIT *StorageUnit, UINT64 BlockAddress, UINT32
 
 BOOLEAN Read(SPD_STORAGE_UNIT *StorageUnit, PVOID Buffer, UINT64 BlockAddress, UINT32 BlockCount, BOOLEAN FlushFlag, SPD_STORAGE_UNIT_STATUS *Status)
 {
-  Q_UNUSED(StorageUnit);
-  Q_UNUSED(Buffer);
-  Q_UNUSED(BlockAddress);
-  Q_UNUSED(BlockCount);
-  Q_UNUSED(FlushFlag);
-  Q_UNUSED(Status);
-
   if (FlushFlag)
   {
     FlushInternal(StorageUnit, BlockAddress, BlockCount, Status);
@@ -49,29 +42,16 @@ BOOLEAN Read(SPD_STORAGE_UNIT *StorageUnit, PVOID Buffer, UINT64 BlockAddress, U
 
 BOOLEAN Write(SPD_STORAGE_UNIT *StorageUnit, PVOID Buffer, UINT64 BlockAddress, UINT32 BlockCount, BOOLEAN FlushFlag, SPD_STORAGE_UNIT_STATUS *Status)
 {
-  Q_UNUSED(StorageUnit);
-  Q_UNUSED(Buffer);
-  Q_UNUSED(BlockAddress);
-  Q_UNUSED(BlockCount);
-  Q_UNUSED(FlushFlag);
-  Q_UNUSED(Status);
+  auto ramDisk = static_cast<RamDiskWinSpd *>(StorageUnit->UserContext);
 
-  /*WARNONCE(!StorageUnit->StorageUnitParams.WriteProtected);
-  WARNONCE(StorageUnit->StorageUnitParams.CacheSupported || FlushFlag);
-
-  RAWDISK *RawDisk = StorageUnit->UserContext;
-  PVOID FileBuffer = (PUINT8)RawDisk->Pointer + BlockAddress * RawDisk->BlockLength;
-
-  CopyBuffer(StorageUnit,
-             FileBuffer, Buffer, BlockCount * RawDisk->BlockLength, SCSI_ADSENSE_WRITE_ERROR,
-             Status);*/
+  auto ok = ramDisk->write(static_cast<LPBYTE>(Buffer), BlockAddress, BlockCount, Status);
 
   if (Status->ScsiStatus == SCSISTAT_GOOD && FlushFlag)
   {
     FlushInternal(StorageUnit, BlockAddress, BlockCount, Status);
   }
 
-  return TRUE;
+  return ok;
 }
 
 BOOLEAN Flush(SPD_STORAGE_UNIT *StorageUnit, UINT64 BlockAddress, UINT32 BlockCount, SPD_STORAGE_UNIT_STATUS *Status)

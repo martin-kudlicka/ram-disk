@@ -16,6 +16,13 @@ bool RamDiskWinSpd::read(LPCBYTE source, quintptr blockAddress, quintptr blockCo
   return copyBuffer(source, destination, blockCount * BlockLength, SCSI_ADSENSE_UNRECOVERED_ERROR, status);
 }
 
+bool RamDiskWinSpd::write(LPBYTE destination, quintptr blockAddress, quintptr blockCount, SPD_STORAGE_UNIT_STATUS *status)
+{
+  auto source = _data.data() + blockAddress * BlockLength;
+
+  return copyBuffer(source, destination, blockCount * BlockLength, SCSI_ADSENSE_WRITE_ERROR, status);
+}
+
 bool RamDiskWinSpd::copyBuffer(LPCBYTE source, LPBYTE destination, quintptr size, quint8 senseCode, SPD_STORAGE_UNIT_STATUS *status) const
 {
   quintptr exceptionDataAddress = 0;
