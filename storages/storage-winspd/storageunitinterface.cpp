@@ -12,34 +12,17 @@ typedef struct _RAWDISK
   BOOLEAN Sparse;
 } RAWDISK;
 
-BOOLEAN FlushInternal(SPD_STORAGE_UNIT *StorageUnit,
-                             UINT64 BlockAddress, UINT32 BlockCount,
-                             SPD_STORAGE_UNIT_STATUS *Status)
+BOOLEAN FlushInternal(SPD_STORAGE_UNIT *StorageUnit, UINT64 BlockAddress, UINT32 BlockCount, SPD_STORAGE_UNIT_STATUS *Status)
 {
   Q_UNUSED(StorageUnit);
   Q_UNUSED(BlockAddress);
   Q_UNUSED(BlockCount);
   Q_UNUSED(Status);
-  /*RAWDISK *RawDisk = StorageUnit->UserContext;
-  PVOID FileBuffer = (PUINT8)RawDisk->Pointer + BlockAddress * RawDisk->BlockLength;
-
-  if (!FlushViewOfFile(FileBuffer, BlockCount * RawDisk->BlockLength))
-    goto error;
-  if (!FlushFileBuffers(RawDisk->Handle))
-    goto error;
-
-  return TRUE;
-
-  error:
-  SpdStorageUnitStatusSetSense(Status,
-                               SCSI_SENSE_MEDIUM_ERROR, SCSI_ADSENSE_WRITE_ERROR, 0);*/
 
   return TRUE;
 }
 
-BOOLEAN Read(SPD_STORAGE_UNIT *StorageUnit,
-                    PVOID Buffer, UINT64 BlockAddress, UINT32 BlockCount, BOOLEAN FlushFlag,
-                    SPD_STORAGE_UNIT_STATUS *Status)
+BOOLEAN Read(SPD_STORAGE_UNIT *StorageUnit, PVOID Buffer, UINT64 BlockAddress, UINT32 BlockCount, BOOLEAN FlushFlag, SPD_STORAGE_UNIT_STATUS *Status)
 {
   Q_UNUSED(StorageUnit);
   Q_UNUSED(Buffer);
@@ -48,16 +31,16 @@ BOOLEAN Read(SPD_STORAGE_UNIT *StorageUnit,
   Q_UNUSED(FlushFlag);
   Q_UNUSED(Status);
 
-  /*WARNONCE(StorageUnit->StorageUnitParams.CacheSupported || FlushFlag);
-
   if (FlushFlag)
   {
     FlushInternal(StorageUnit, BlockAddress, BlockCount, Status);
-    if (SCSISTAT_GOOD != Status->ScsiStatus)
-      return TRUE;
+    if (Status->ScsiStatus != SCSISTAT_GOOD)
+    {
+      return FALSE;
+    }
   }
 
-  RAWDISK *RawDisk = StorageUnit->UserContext;
+  /*RAWDISK *RawDisk = StorageUnit->UserContext;
   PVOID FileBuffer = (PUINT8)RawDisk->Pointer + BlockAddress * RawDisk->BlockLength;
 
   CopyBuffer(StorageUnit,
@@ -67,9 +50,7 @@ BOOLEAN Read(SPD_STORAGE_UNIT *StorageUnit,
   return TRUE;
 }
 
-BOOLEAN Write(SPD_STORAGE_UNIT *StorageUnit,
-                     PVOID Buffer, UINT64 BlockAddress, UINT32 BlockCount, BOOLEAN FlushFlag,
-                     SPD_STORAGE_UNIT_STATUS *Status)
+BOOLEAN Write(SPD_STORAGE_UNIT *StorageUnit, PVOID Buffer, UINT64 BlockAddress, UINT32 BlockCount, BOOLEAN FlushFlag, SPD_STORAGE_UNIT_STATUS *Status)
 {
   Q_UNUSED(StorageUnit);
   Q_UNUSED(Buffer);
@@ -86,27 +67,22 @@ BOOLEAN Write(SPD_STORAGE_UNIT *StorageUnit,
 
   CopyBuffer(StorageUnit,
              FileBuffer, Buffer, BlockCount * RawDisk->BlockLength, SCSI_ADSENSE_WRITE_ERROR,
-             Status);
+             Status);*/
 
-  if (SCSISTAT_GOOD == Status->ScsiStatus && FlushFlag)
-    FlushInternal(StorageUnit, BlockAddress, BlockCount, Status);*/
+  if (Status->ScsiStatus == SCSISTAT_GOOD && FlushFlag)
+  {
+    FlushInternal(StorageUnit, BlockAddress, BlockCount, Status);
+  }
 
   return TRUE;
 }
 
-BOOLEAN Flush(SPD_STORAGE_UNIT *StorageUnit,
-                     UINT64 BlockAddress, UINT32 BlockCount,
-                     SPD_STORAGE_UNIT_STATUS *Status)
+BOOLEAN Flush(SPD_STORAGE_UNIT *StorageUnit, UINT64 BlockAddress, UINT32 BlockCount, SPD_STORAGE_UNIT_STATUS *Status)
 {
-  /*WARNONCE(!StorageUnit->StorageUnitParams.WriteProtected);
-  WARNONCE(StorageUnit->StorageUnitParams.CacheSupported);*/
-
   return FlushInternal(StorageUnit, BlockAddress, BlockCount, Status);
 }
 
-BOOLEAN Unmap(SPD_STORAGE_UNIT *StorageUnit,
-                     SPD_UNMAP_DESCRIPTOR Descriptors[], UINT32 Count,
-                     SPD_STORAGE_UNIT_STATUS *Status)
+BOOLEAN Unmap(SPD_STORAGE_UNIT *StorageUnit, SPD_UNMAP_DESCRIPTOR Descriptors[], UINT32 Count, SPD_STORAGE_UNIT_STATUS *Status)
 {
   Q_UNUSED(StorageUnit);
   Q_UNUSED(Descriptors);
