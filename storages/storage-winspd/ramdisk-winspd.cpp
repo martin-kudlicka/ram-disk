@@ -92,20 +92,38 @@ bool RamDiskWinSpd::start()
 {
   auto sizeInBytes = _parameters.size * 1024 * 1024;
 
+  static auto productId = []
+  {
+    auto val = QCoreApplication::applicationName();
+    val.truncate(_countof(SPD_STORAGE_UNIT_PARAMS::ProductId));
+    return val;
+  }();
+  static auto revision  = []
+  {
+    auto val = QCoreApplication::applicationVersion();
+    val.remove('.');
+    while (val.startsWith('0'))
+    {
+      val.remove(0, 1);
+    }
+    val.truncate(_countof(SPD_STORAGE_UNIT_PARAMS::ProductRevisionLevel));
+    return val;
+  }();
+
   SPD_STORAGE_UNIT_PARAMS storageUnitParams = {};
 
   UuidCreate(&storageUnitParams.Guid);
   storageUnitParams.BlockCount  = sizeInBytes / BlockLength;
   storageUnitParams.BlockLength = BlockLength;
-  lstrcpyA(reinterpret_cast<LPSTR>(storageUnitParams.ProductId),            "RAM Disk");
-  lstrcpyA(reinterpret_cast<LPSTR>(storageUnitParams.ProductRevisionLevel), "0.1");
+  lstrcpyA(reinterpret_cast<LPSTR>(storageUnitParams.ProductId),            productId.toStdString().c_str());
+  lstrcpyA(reinterpret_cast<LPSTR>(storageUnitParams.ProductRevisionLevel), revision.toStdString().c_str());
   storageUnitParams.WriteProtected    = TRUE;
   //storageUnitParams.CacheSupported    = FALSE;
   //storageUnitParams.UnmapSupported    = FALSE;
   storageUnitParams.MaxTransferLength = 64 * 1024;
 
   _data.resize(sizeInBytes);
-  if (static_cast<quintptr>(_data.size()) == sizeInBytes)
+  if (gsl::narrow<decltype(sizeInBytes)>(_data.size()) == sizeInBytes)
   {
     auto error = SpdStorageUnitCreate(nullptr, &storageUnitParams, &gStorageUnitInterface, &_storageUnit);
     if (error == ERROR_SUCCESS)
