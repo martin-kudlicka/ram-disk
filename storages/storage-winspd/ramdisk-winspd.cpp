@@ -138,11 +138,21 @@ void RamDiskWinSpd::start()
     throw MException::MCritical(WinSpd(), error, "SpdStorageUnitCreate");
   }
 
+  error = SpdStorageUnitStartDispatcher(_storageUnit, 0);
+  if (error != ERROR_SUCCESS)
+  {
+    SpdStorageUnitDelete(_storageUnit);
+
+    throw MException::MCritical(WinSpd(), error, "SpdStorageUnitStartDispatcher");
+  }
+
   _storageUnit->UserContext = this;
 }
 
 void RamDiskWinSpd::stop()
 {
+  SpdStorageUnitShutdown(_storageUnit);
+  SpdStorageUnitWaitDispatcher(_storageUnit);
   SpdStorageUnitDelete(_storageUnit);
 
   _data.clear();
