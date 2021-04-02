@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ramdisk-winspd.h"
 
+#include "log.h"
 #include "storageunitinterface.h"
 
 auto BlockLength = 4096;
@@ -88,7 +89,7 @@ bool RamDiskWinSpd::copyBuffer(LPCBYTE source, LPBYTE destination, quintptr size
   return true;
 }
 
-bool RamDiskWinSpd::start()
+void RamDiskWinSpd::start()
 {
   auto sizeInBytes = _parameters.size * 1024 * 1024;
 
@@ -122,19 +123,22 @@ bool RamDiskWinSpd::start()
   //storageUnitParams.UnmapSupported    = FALSE;
   storageUnitParams.MaxTransferLength = 64 * 1024;
 
-  _data.resize(sizeInBytes);
-  if (gsl::narrow<decltype(sizeInBytes)>(_data.size()) == sizeInBytes)
+  try
   {
-    auto error = SpdStorageUnitCreate(nullptr, &storageUnitParams, &gStorageUnitInterface, &_storageUnit);
-    if (error == ERROR_SUCCESS)
-    {
-      _storageUnit->UserContext = this;
-
-      return true;
-    }
+    _data.resize(sizeInBytes);
+  }
+  catch (const std::bad_alloc &ex)
+  {
+    throw MException::MCritical(WinSpd(), ERROR_NOT_ENOUGH_MEMORY, ex.what());
   }
 
-  return false;
+  auto error = SpdStorageUnitCreate(nullptr, &storageUnitParams, &gStorageUnitInterface, &_storageUnit);
+  if (error != ERROR_SUCCESS)
+  {
+    throw MException::MCritical(WinSpd(), error, "SpdStorageUnitCreate");
+  }
+
+  _storageUnit->UserContext = this;
 }
 
 void RamDiskWinSpd::stop()

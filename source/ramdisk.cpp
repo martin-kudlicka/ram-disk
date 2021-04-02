@@ -44,19 +44,21 @@ void RamDisk::start()
 
   if (!_ramDisk)
   {
-    mCCritical(RAMDisk) << "RAM disk storage \"" << _options.storage() << "\" unavailable";
+    mCriticalC(RAMDisk) << "RAM disk storage \"" << _options.storage() << "\" unavailable";
 
     return;
   }
 
-  auto ok = _ramDisk->start();
-  if (ok)
+  try
   {
-    mCInfo(RAMDisk) << "RAM disk \"" << _options.drive() << "\" started";
+    _ramDisk->start();
+
+    mInfoC(RAMDisk) << "RAM disk \"" << _options.drive() << "\" started";
   }
-  else
+  catch (const MException::MCritical &ex)
   {
-    mCCritical(RAMDisk) << "RAM disk \"" << _options.drive() << "\" failed to start";
+    mCriticalEx(ex);
+    mCriticalC(RAMDisk) << "RAM disk \"" << _options.drive() << "\" failed to start";
 
     _ramDisk.clear();
   }
@@ -66,7 +68,7 @@ void RamDisk::stop()
 {
   _ramDisk->stop();
 
-  mCInfo(RAMDisk) << "RAM disk \"" << _options.drive() << "\" stopped";
+  mInfoC(RAMDisk) << "RAM disk \"" << _options.drive() << "\" stopped";
 
   _ramDisk.clear();
 }

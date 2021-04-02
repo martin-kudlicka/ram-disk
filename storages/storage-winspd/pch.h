@@ -5,4 +5,6 @@
 
 #include <QtCore>
 
+#include <MkCore>
+
 #endif
