@@ -159,7 +159,17 @@ bool RamDisksModel::setData(const QModelIndex &index, const QVariant &value, int
     case Column::Enabled:
       disk->options().setEnabled(value.toBool());
 
-      // TODO
+      if (value.toBool())
+      {
+        disk->start();
+      }
+      else
+      {
+        if (disk->running())
+        {
+          disk->stop();
+        }
+      }
 
       emit dataChanged(index, index);
 
