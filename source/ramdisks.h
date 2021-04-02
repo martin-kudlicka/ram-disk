@@ -23,6 +23,8 @@ class RamDisks
   private:
     QHash<MUuidPtr, RamDiskSPtr> _disks;
     QSettings                    _settings;
+
+    RamDiskSPtrList get();
 };
 
 #endif

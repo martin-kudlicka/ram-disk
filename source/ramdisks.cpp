@@ -6,6 +6,14 @@ const QString RamDisks::Property::Group = "disks";
 RamDisks::RamDisks()
 {
   _settings.beginGroup(Property::Group);
+
+  for (const auto &disk : get())
+  {
+    if (disk->options().enabled())
+    {
+      disk->start();
+    }
+  }
 }
 
 quintptr RamDisks::count() const
@@ -61,4 +69,21 @@ void RamDisks::removeIndex(quintptr index)
 
   _disks.remove(id2);
   _settings.remove(id2.toString());
+}
+
+RamDiskSPtrList RamDisks::get()
+{
+  {
+    // initialize disks if needed
+    auto diskCount = count();
+    if (gsl::narrow<decltype(diskCount)>(_disks.count()) != diskCount)
+    {
+      for (decltype(diskCount) index2 = 0; index2 < diskCount; ++index2)
+      {
+        get(id(index2));
+      }
+    }
+  }
+
+  return _disks.values();
 }
