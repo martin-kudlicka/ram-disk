@@ -19,7 +19,7 @@ class MainWindow : public QMainWindow
     void setupWidgets();
 
   private Q_SLOTS:
-    void on_actionAddRamDisk_triggered   (bool checked = false);
-    void on_actionRemoveRamDisk_triggered(bool checked = false);
-    void on_disks_doubleClicked          (const QModelIndex &index);
+    void on_addRamDisk_clicked   (bool checked = false);
+    void on_removeRamDisk_clicked(bool checked = false);
+    void on_disks_doubleClicked  (const QModelIndex &index);
 };

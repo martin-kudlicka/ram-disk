@@ -24,7 +24,7 @@ void MainWindow::setupWidgets()
   _ui.disks->header()->setSectionResizeMode(static_cast<int>(RamDisksModel::Column::Enabled), QHeaderView::ResizeToContents);
 }
 
-void MainWindow::on_actionAddRamDisk_triggered(bool checked /* false */)
+void MainWindow::on_addRamDisk_clicked(bool checked /* false */)
 {
   Q_UNUSED(checked);
 
@@ -43,7 +43,7 @@ void MainWindow::on_actionAddRamDisk_triggered(bool checked /* false */)
   }
 }
 
-void MainWindow::on_actionRemoveRamDisk_triggered(bool checked /* false */)
+void MainWindow::on_removeRamDisk_clicked(bool checked /* false */)
 {
   Q_UNUSED(checked);
 
