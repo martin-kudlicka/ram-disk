@@ -22,6 +22,8 @@ void MainWindow::setupWidgets()
   _ui.disks->setModel(&_ramDisksModel);
 
   _ui.disks->header()->setSectionResizeMode(static_cast<int>(RamDisksModel::Column::Enabled), QHeaderView::ResizeToContents);
+
+  connect(_ui.disks->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::on_disks_selectionChanged);
 }
 
 void MainWindow::on_addRamDisk_clicked(bool checked /* false */)
@@ -59,4 +61,14 @@ void MainWindow::on_removeRamDisk_clicked(bool checked /* false */)
 void MainWindow::on_disks_doubleClicked(const QModelIndex &index)
 {
   editDisk(index);
+}
+
+void MainWindow::on_disks_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const
+{
+  Q_UNUSED(selected);
+  Q_UNUSED(deselected);
+
+  auto isSelected = !_ui.disks->selectionModel()->selectedRows().isEmpty();
+
+  _ui.removeRamDisk->setEnabled(isSelected);
 }

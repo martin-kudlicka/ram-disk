@@ -19,7 +19,8 @@ class MainWindow : public QMainWindow
     void setupWidgets();
 
   private Q_SLOTS:
-    void on_addRamDisk_clicked   (bool checked = false);
-    void on_removeRamDisk_clicked(bool checked = false);
-    void on_disks_doubleClicked  (const QModelIndex &index);
+    void on_addRamDisk_clicked    (bool checked = false);
+    void on_removeRamDisk_clicked (bool checked = false);
+    void on_disks_doubleClicked   (const QModelIndex &index);
+    void on_disks_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const;
 };
