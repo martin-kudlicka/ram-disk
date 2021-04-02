@@ -29,6 +29,11 @@ const MUuidPtr &RamDiskOptions::id() const
   return _id;
 }
 
+void RamDiskOptions::setEnabled(bool enabled)
+{
+  setValue(Property::Enabled, enabled);
+}
+
 quintptr RamDiskOptions::size() const
 {
   return value(Property::Size).toUInt();

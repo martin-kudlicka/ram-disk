@@ -37,7 +37,7 @@ QVariant RamDisksModel::data(const QModelIndex &index, int role /* Qt::DisplayRo
     return QVariant();
   }
 
-  auto rule = const_cast<RamDisks *>(&_disks)->get(index.internalId());
+  auto disk = const_cast<RamDisks *>(&_disks)->get(index.internalId());
 
   switch (role)
   {
@@ -45,20 +45,33 @@ QVariant RamDisksModel::data(const QModelIndex &index, int role /* Qt::DisplayRo
       switch (index.column())
       {
         case Column::Drive:
-          return rule->options().drive();
+          return disk->options().drive();
         case Column::Size:
-          return rule->options().size();
+          return disk->options().size();
       }
       break;
     case Qt::CheckStateRole:
       switch (index.column())
       {
         case Column::Enabled:
-          return rule->options().enabled() ? Qt::Checked : Qt::Unchecked;
+          return disk->options().enabled() ? Qt::Checked : Qt::Unchecked;
       }
   }
 
   return {};
+}
+
+Qt::ItemFlags RamDisksModel::flags(const QModelIndex &index) const
+{
+  auto itemFlags = QAbstractItemModel::flags(index);
+
+  switch (index.column())
+  {
+    case Column::Enabled:
+      itemFlags |= Qt::ItemIsUserCheckable;
+  }
+
+  return itemFlags;
 }
 
 QVariant RamDisksModel::headerData(int section, Qt::Orientation orientation, int role /* Qt::DisplayRole */) const
@@ -130,4 +143,30 @@ int RamDisksModel::rowCount(const QModelIndex &parent /* QModelIndex() */) const
   }
 
   return _disks.count();
+}
+
+bool RamDisksModel::setData(const QModelIndex &index, const QVariant &value, int role /* Qt::EditRole */)
+{
+  if (role != Qt::CheckStateRole)
+  {
+    return QAbstractItemModel::setData(index, value, role);
+  }
+
+  auto disk = _disks.get(index.internalId());
+
+  switch (index.column())
+  {
+    case Column::Enabled:
+      disk->options().setEnabled(value.toBool());
+
+      // TODO
+
+      emit dataChanged(index, index);
+
+      return true;
+    default:
+      Q_UNREACHABLE();
+  }
+
+  return false;
 }

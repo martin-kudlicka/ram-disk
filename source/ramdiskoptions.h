@@ -15,11 +15,12 @@ class RamDiskOptions : public MSettings
              RamDiskOptions(const MUuidPtr &id);
     virtual ~RamDiskOptions() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
 
-          QString   drive  () const;
-          bool      enabled() const;
-    const MUuidPtr &id     () const;
-          quintptr  size   () const;
-          QString   storage() const;
+          QString   drive     () const;
+          bool      enabled   () const;
+    const MUuidPtr &id        () const;
+          void      setEnabled(bool enabled);
+          quintptr  size      () const;
+          QString   storage   () const;
 
     private:
       MUuidPtr _id;
