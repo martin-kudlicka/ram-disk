@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "ramdisksmodel.h"
 
+MUuidPtr RamDisksModel::id(const QModelIndex &index) const
+{
+  return index.internalId();
+}
+
 void RamDisksModel::insert(const MUuidPtr &id)
 {
   auto row = _disks.index(id);

@@ -16,6 +16,7 @@ class RamDisksModel : public QAbstractItemModel
 
     virtual ~RamDisksModel() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
 
+    MUuidPtr    id     (const QModelIndex &index) const;
     void        insert (const MUuidPtr &id);
     RamDiskSPtr ramDisk(const MUuidPtr &id);
     RamDiskSPtr ramDisk(const QModelIndex &index);

@@ -15,9 +15,11 @@ class MainWindow : public QMainWindow
     RamDisksModel       _ramDisksModel;
     Ui::MainWindowClass _ui;
 
+    void editDisk    (const QModelIndex &index);
     void setupWidgets();
 
   private Q_SLOTS:
     void on_actionAddRamDisk_triggered   (bool checked = false);
     void on_actionRemoveRamDisk_triggered(bool checked = false);
+    void on_disks_doubleClicked          (const QModelIndex &index);
 };

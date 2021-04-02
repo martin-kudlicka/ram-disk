@@ -10,6 +10,13 @@ MainWindow::MainWindow() : QMainWindow()
     setupWidgets();
 }
 
+void MainWindow::editDisk(const QModelIndex &index)
+{
+  auto id = _ramDisksModel.id(index);
+
+  RamDiskDialog(id, this).exec();
+}
+
 void MainWindow::setupWidgets()
 {
   _ui.disks->setModel(&_ramDisksModel);
@@ -47,4 +54,9 @@ void MainWindow::on_actionRemoveRamDisk_triggered(bool checked /* false */)
   }
 
   _ramDisksModel.remove(_ui.disks->currentIndex());
+}
+
+void MainWindow::on_disks_doubleClicked(const QModelIndex &index)
+{
+  editDisk(index);
 }
