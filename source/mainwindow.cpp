@@ -45,6 +45,13 @@ void MainWindow::on_addRamDisk_clicked(bool checked /* false */)
   }
 }
 
+void MainWindow::on_editRamDisk_clicked(bool checked /* false */)
+{
+  Q_UNUSED(checked);
+
+  editDisk(_ui.disks->currentIndex());
+}
+
 void MainWindow::on_removeRamDisk_clicked(bool checked /* false */)
 {
   Q_UNUSED(checked);
@@ -70,5 +77,6 @@ void MainWindow::on_disks_selectionChanged(const QItemSelection &selected, const
 
   auto isSelected = !_ui.disks->selectionModel()->selectedRows().isEmpty();
 
+  _ui.editRamDisk->setEnabled(isSelected);
   _ui.removeRamDisk->setEnabled(isSelected);
 }
