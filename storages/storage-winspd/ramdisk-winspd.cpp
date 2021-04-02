@@ -130,6 +130,7 @@ void RamDiskWinSpd::start()
   //storageUnitParams.WriteProtected    = FALSE;
   //storageUnitParams.CacheSupported    = FALSE;
   //storageUnitParams.UnmapSupported    = FALSE;
+  storageUnitParams.EjectDisabled     = TRUE;
   storageUnitParams.MaxTransferLength = 64 * 1024;
 
   SPD_PARTITION partition = {};
