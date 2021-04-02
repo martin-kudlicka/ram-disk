@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "ramdisksmodel.h"
 
+RamDisksModel::RamDisksModel() : _disks(this)
+{
+}
+
 MUuidPtr RamDisksModel::id(const QModelIndex &index) const
 {
   return index.internalId();
@@ -28,11 +32,23 @@ void RamDisksModel::remove(const QModelIndex &index)
   removeRow(index.row());
 }
 
+void RamDisksModel::setDataChanged(const MUuidPtr &id, Column column)
+{
+  auto row = _disks.index(id);
+  setDataChanged(row, column);
+}
+
+void RamDisksModel::setDataChanged(int row, Column column)
+{
+  auto indexTmp = index(row, gsl::narrow<int>(column));
+  emit dataChanged(indexTmp, indexTmp);
+}
+
 int RamDisksModel::columnCount(const QModelIndex &parent /* QModelIndex() */) const
 {
   Q_UNUSED(parent);
 
-  return static_cast<int>(Column::Count);
+  return gsl::narrow<decltype(columnCount())>(Column::Count);
 }
 
 QVariant RamDisksModel::data(const QModelIndex &index, int role /* Qt::DisplayRole */) const

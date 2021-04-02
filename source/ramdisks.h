@@ -3,6 +3,8 @@
 
 #include "ramdisk.h"
 
+class RamDisksModel;
+
 class RamDisks
 {
   public:
@@ -11,7 +13,7 @@ class RamDisks
       static const QString Group;
     };
 
-    RamDisks();
+    RamDisks(RamDisksModel *ramDisksModel);
 
           quintptr     count      ()                   const;
     const RamDiskSPtr &get        (const MUuidPtr &id);
@@ -23,6 +25,7 @@ class RamDisks
   private:
     QHash<MUuidPtr, RamDiskSPtr> _disks;
     QSettings                    _settings;
+    RamDisksModel               *_ramDisksModel;
 
     RamDiskSPtrList get();
 };

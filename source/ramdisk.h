@@ -12,7 +12,7 @@ class RamDisk
 
     RamDiskOptions &options();
     bool            running() const;
-    void            start  ();
+    bool            start  ();
     void            stop   ();
 
   private:

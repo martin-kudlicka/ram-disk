@@ -1,17 +1,20 @@
 #include "pch.h"
 #include "ramdisks.h"
 
+#include "ramdisksmodel.h"
+
 const QString RamDisks::Property::Group = "disks";
 
-RamDisks::RamDisks()
+RamDisks::RamDisks(RamDisksModel *ramDisksModel) : _ramDisksModel(ramDisksModel)
 {
   _settings.beginGroup(Property::Group);
 
-  for (const auto &disk : get())
+  for (const auto &ramDisk : get())
   {
-    if (disk->options().enabled())
+    if (ramDisk->options().enabled() && !ramDisk->start())
     {
-      disk->start();
+      ramDisk->options().setEnabled(false);
+      _ramDisksModel->setDataChanged(ramDisk->options().id(), RamDisksModel::Column::Enabled);
     }
   }
 }

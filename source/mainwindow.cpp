@@ -21,7 +21,7 @@ void MainWindow::setupWidgets()
 {
   _ui.disks->setModel(&_ramDisksModel);
 
-  _ui.disks->header()->setSectionResizeMode(static_cast<int>(RamDisksModel::Column::Enabled), QHeaderView::ResizeToContents);
+  _ui.disks->header()->setSectionResizeMode(gsl::narrow<int>(RamDisksModel::Column::Enabled), QHeaderView::ResizeToContents);
 
   connect(_ui.disks->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::on_disks_selectionChanged);
 }
@@ -39,9 +39,10 @@ void MainWindow::on_addRamDisk_clicked(bool checked /* false */)
   _ramDisksModel.insert(ramDiskDialog.options().id());
 
   auto ramDisk = _ramDisksModel.ramDisk(ramDiskDialog.options().id());
-  if (ramDisk->options().enabled())
+  if (ramDisk->options().enabled() && !ramDisk->start())
   {
-    ramDisk->start();
+    ramDisk->options().setEnabled(false);
+    _ramDisksModel.setDataChanged(ramDisk->options().id(), RamDisksModel::Column::Enabled);
   }
 }
 

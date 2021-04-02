@@ -14,16 +14,20 @@ class RamDisksModel : public QAbstractItemModel
       Count
     };
 
+             RamDisksModel();
     virtual ~RamDisksModel() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
 
-    MUuidPtr    id     (const QModelIndex &index) const;
-    void        insert (const MUuidPtr &id);
-    RamDiskSPtr ramDisk(const MUuidPtr &id);
-    RamDiskSPtr ramDisk(const QModelIndex &index);
-    void        remove (const QModelIndex &index);
+    MUuidPtr    id            (const QModelIndex &index) const;
+    void        insert        (const MUuidPtr &id);
+    RamDiskSPtr ramDisk       (const MUuidPtr &id);
+    RamDiskSPtr ramDisk       (const QModelIndex &index);
+    void        remove        (const QModelIndex &index);
+    void        setDataChanged(const MUuidPtr &id, Column column);
 
   private:
     RamDisks _disks;
+
+    void setDataChanged(int row, Column column);
 
     virtual int           columnCount(const QModelIndex &parent = QModelIndex())                            const Q_DECL_OVERRIDE;
     virtual QVariant      data       (const QModelIndex &index, int role = Qt::DisplayRole)                 const Q_DECL_OVERRIDE;

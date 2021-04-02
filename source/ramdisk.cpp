@@ -26,7 +26,7 @@ bool RamDisk::running() const
   return _ramDisk;
 }
 
-void RamDisk::start()
+bool RamDisk::start()
 {
   for (const auto &storage : gStorages->toRawList())
   {
@@ -41,12 +41,11 @@ void RamDisk::start()
       break;
     }
   }
-
   if (!_ramDisk)
   {
     mCriticalC(RAMDisk) << "RAM disk storage \"" << _options.storage() << "\" unavailable";
 
-    return;
+    return false;
   }
 
   try
@@ -61,7 +60,11 @@ void RamDisk::start()
     mCriticalC(RAMDisk) << "RAM disk \"" << _options.drive() << "\" failed to start";
 
     _ramDisk.clear();
+
+    return false;
   }
+
+  return true;
 }
 
 void RamDisk::stop()
