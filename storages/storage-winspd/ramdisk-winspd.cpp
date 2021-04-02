@@ -93,6 +93,15 @@ void RamDiskWinSpd::start()
 {
   auto sizeInBytes = _parameters.size * 1024 * 1024;
 
+  try
+  {
+    _data.resize(sizeInBytes);
+  }
+  catch (const std::bad_alloc &ex)
+  {
+    throw MException::MCritical(WinSpd(), ERROR_NOT_ENOUGH_MEMORY, ex.what());
+  }
+
   static auto productId = []
   {
     auto val = QCoreApplication::applicationName();
@@ -118,21 +127,22 @@ void RamDiskWinSpd::start()
   storageUnitParams.BlockLength = BlockLength;
   lstrcpyA(reinterpret_cast<LPSTR>(storageUnitParams.ProductId),            productId.toStdString().c_str());
   lstrcpyA(reinterpret_cast<LPSTR>(storageUnitParams.ProductRevisionLevel), revision.toStdString().c_str());
-  storageUnitParams.WriteProtected    = TRUE;
+  //storageUnitParams.WriteProtected    = FALSE;
   //storageUnitParams.CacheSupported    = FALSE;
   //storageUnitParams.UnmapSupported    = FALSE;
   storageUnitParams.MaxTransferLength = 64 * 1024;
 
-  try
+  SPD_PARTITION partition = {};
+  partition.Type          = PARTITION_IFS;
+  partition.BlockAddress  = 4096 >= BlockLength ? 4096 / BlockLength : 1;
+  partition.BlockCount    = storageUnitParams.BlockCount - partition.BlockAddress;
+  auto error = SpdDefinePartitionTable(&partition, 1, _data.data());
+  if (error != ERROR_SUCCESS)
   {
-    _data.resize(sizeInBytes);
-  }
-  catch (const std::bad_alloc &ex)
-  {
-    throw MException::MCritical(WinSpd(), ERROR_NOT_ENOUGH_MEMORY, ex.what());
+    throw MException::MCritical(WinSpd(), error, "SpdDefinePartitionTable");
   }
 
-  auto error = SpdStorageUnitCreate(nullptr, &storageUnitParams, &gStorageUnitInterface, &_storageUnit);
+  error = SpdStorageUnitCreate(nullptr, &storageUnitParams, &gStorageUnitInterface, &_storageUnit);
   if (error != ERROR_SUCCESS)
   {
     throw MException::MCritical(WinSpd(), error, "SpdStorageUnitCreate");
