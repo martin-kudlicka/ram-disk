@@ -182,7 +182,10 @@ bool RamDisksModel::setData(const QModelIndex &index, const QVariant &value, int
 
       if (value.toBool())
       {
-        disk->start();
+        if (!disk->start())
+        {
+          disk->options().setEnabled(false);
+        }
       }
       else
       {
