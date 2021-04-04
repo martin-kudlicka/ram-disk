@@ -10,9 +10,6 @@
     <ClCompile Include="ramdisk-winspd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="storageunitinterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -25,9 +22,6 @@
       <Filter>Interface Files</Filter>
     </ClInclude>
     <ClInclude Include="ramdisk-winspd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="storageunitinterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="log.h">
