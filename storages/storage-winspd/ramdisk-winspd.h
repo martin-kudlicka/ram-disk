@@ -11,6 +11,7 @@ class RamDiskWinSpd : public RamDiskInterface
 
   private:
     QScopedPointer<MWinSpdBufferDevice> _bufferDevice;
+    QString                             _mountPoint;
 
     virtual void start() Q_DECL_OVERRIDE;
     virtual void stop () Q_DECL_OVERRIDE;

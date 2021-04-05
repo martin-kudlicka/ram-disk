@@ -52,7 +52,11 @@ void RamDiskWinSpd::start()
 
     MStorage::format(*newVolume, MVolume::FileSystem::FAT32, QCoreApplication::applicationName(), false);
 
-    // TODO assign letter
+    _mountPoint = _parameters.drive + '\\';
+    if (!SetVolumeMountPoint(_mountPoint.toStdWString().c_str(), (*newVolume + '\\').toStdWString().c_str()))
+    {
+      throw MException::MCritical(WinSpd(), GetLastError(), "SetVolumeMountPoint");
+    }
   }
   catch (const MException::MCritical &)
   {
@@ -64,5 +68,8 @@ void RamDiskWinSpd::start()
 
 void RamDiskWinSpd::stop()
 {
+  DeleteVolumeMountPointW(_mountPoint.toStdWString().c_str());
+
+  _mountPoint.clear();
   _bufferDevice.reset();
 }
