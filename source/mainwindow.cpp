@@ -26,6 +26,7 @@ void MainWindow::setupWidgets()
   _ui.disks->header()->setSectionResizeMode(gsl::narrow<int>(RamDisksModel::Column::Enabled), QHeaderView::ResizeToContents);
 
   _trayIcon.setIcon(windowIcon());
+  _trayIcon.setToolTip(windowTitle());
 
   connect(_ui.disks->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::on_disks_selectionChanged);
   connect(&_trayIcon,                  &QSystemTrayIcon::activated,            this, &MainWindow::on_trayIcon_activated);
