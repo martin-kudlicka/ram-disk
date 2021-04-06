@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RAMDisk", "source\RAMDisk.vcxproj", "{9DB5B5FE-E368-42BA-A690-0A08BC311ECF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32AB621F-E960-4CF4-8033-A5B57D537F2F} = {32AB621F-E960-4CF4-8033-A5B57D537F2F}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "storages", "storages", "{A084C742-3A46-4434-8B8D-B42353C6495D}"
 EndProject
