@@ -2,6 +2,8 @@
 #include "mainwindow.h"
 
 #include "ramdiskdialog.h"
+#include "optionsdialog.h"
+#include "options.h"
 
 MainWindow::MainWindow() : QMainWindow()
 {
@@ -23,7 +25,32 @@ void MainWindow::setupWidgets()
 
   _ui.disks->header()->setSectionResizeMode(gsl::narrow<int>(RamDisksModel::Column::Enabled), QHeaderView::ResizeToContents);
 
+  _trayIcon.setIcon(windowIcon());
+
   connect(_ui.disks->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::on_disks_selectionChanged);
+  connect(&_trayIcon,                  &QSystemTrayIcon::activated,            this, &MainWindow::on_trayIcon_activated);
+}
+
+bool MainWindow::event(QEvent *event)
+{
+  switch (event->type())
+  {
+    case QEvent::WindowStateChange:
+      if (isMinimized() && gOptions->minimizeToTray())
+      {
+        hide();
+        _trayIcon.show();
+      }
+  }
+
+  return QMainWindow::event(event);
+}
+
+void MainWindow::on_actionOptions_triggered(bool checked /* false */)
+{
+  Q_UNUSED(checked);
+
+  OptionsDialog(this).exec();
 }
 
 void MainWindow::on_addRamDisk_clicked(bool checked /* false */)
@@ -80,4 +107,14 @@ void MainWindow::on_disks_selectionChanged(const QItemSelection &selected, const
 
   _ui.editRamDisk->setEnabled(isSelected);
   _ui.removeRamDisk->setEnabled(isSelected);
+}
+
+void MainWindow::on_trayIcon_activated(QSystemTrayIcon::ActivationReason reason)
+{
+  if (reason == QSystemTrayIcon::DoubleClick)
+  {
+    _trayIcon.hide();
+    showNormal();
+    activateWindow();
+  }
 }

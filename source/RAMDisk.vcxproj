@@ -101,6 +101,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp" />
+    <ClCompile Include="options.cpp" />
+    <ClCompile Include="optionsdialog.cpp" />
     <ClCompile Include="ramdisk.cpp" />
     <ClCompile Include="ramdiskdialog.cpp" />
     <ClCompile Include="ramdiskoptions.cpp" />
@@ -112,6 +114,7 @@
     </ClCompile>
     <ClCompile Include="storages.cpp" />
     <QtRcc Include="mainwindow.qrc" />
+    <QtUic Include="optionsdialog.ui" />
     <QtUic Include="ramdiskdialog.ui" />
     <QtUic Include="mainwindow.ui" />
     <QtMoc Include="mainwindow.h" />
@@ -121,6 +124,8 @@
   <ItemGroup>
     <ClInclude Include="..\common\ramdiskinterface.h" />
     <ClInclude Include="log.h" />
+    <ClInclude Include="options.h" />
+    <ClInclude Include="optionsdialog.h" />
     <ClInclude Include="storages.h" />
     <QtMoc Include="ramdiskdialog.h" />
     <ClInclude Include="ramdisk.h" />
