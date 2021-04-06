@@ -11,6 +11,9 @@ class MainWindow : public QMainWindow
              MainWindow();
     virtual ~MainWindow() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
 
+  public Q_SLOTS:
+    void show();
+
   private:
     RamDisksModel       _ramDisksModel;
     Ui::MainWindowClass _ui;

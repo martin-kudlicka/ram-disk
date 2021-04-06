@@ -12,3 +12,8 @@ bool Options::minimizeToTray() const
 {
   return value(Property::MinimizeToTray).toBool();
 }
+
+bool Options::startMinimized() const
+{
+  return value(Property::StartMinimized).toBool();
+}

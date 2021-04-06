@@ -13,6 +13,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) : QDialog(parent), _widgetSettings
 void OptionsDialog::setupSettings()
 {
   _widgetSettings.setWidget(Options::Property::MinimizeToTray, _ui.minimizeToTray);
+  _widgetSettings.setWidget(Options::Property::StartMinimized, _ui.startMinimized);
 
   _widgetSettings.load();
 }

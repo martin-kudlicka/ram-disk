@@ -12,6 +12,18 @@ MainWindow::MainWindow() : QMainWindow()
     setupWidgets();
 }
 
+void MainWindow::show()
+{
+  if (gOptions->startMinimized())
+  {
+    setWindowState(Qt::WindowMinimized);
+  }
+  else
+  {
+    QMainWindow::show();
+  }
+}
+
 void MainWindow::editDisk(const QModelIndex &index)
 {
   auto id = _ramDisksModel.id(index);
