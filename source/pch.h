@@ -3,6 +3,7 @@
 
 #include <QtWidgets>
 
+#include <MkAnalytics>
 #include <MkCore>
 #include <MkWidgets>
 
