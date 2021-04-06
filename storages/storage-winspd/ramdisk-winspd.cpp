@@ -31,7 +31,7 @@ void RamDiskWinSpd::start()
     QStringList volumesAfter;
     for (auto run = 0; run < 10; ++run)
     {
-      Sleep(100);
+      QThread::msleep(100);
 
       volumesAfter = MVolumes::enumerate();
       if (volumesAfter.count() > volumesBefore.count())
@@ -52,10 +52,26 @@ void RamDiskWinSpd::start()
 
     MStorage::format(*newVolume, MVolume::FileSystem::FAT32, QCoreApplication::applicationName(), false);
 
+    auto autoPlayEnabled      = MOperatingSystem::Settings::Device::AutoPlay::enabled();
+    auto autoPlayEnabledGuard = qScopeGuard([autoPlayEnabled] { MOperatingSystem::Settings::Device::AutoPlay::setEnabled(autoPlayEnabled); });
+    if (autoPlayEnabled)
+    {
+      MOperatingSystem::Settings::Device::AutoPlay::setEnabled(false);
+    }
+    else
+    {
+      autoPlayEnabledGuard.dismiss();
+    }
+
     _mountPoint = _parameters.drive + '\\';
     if (!SetVolumeMountPoint(_mountPoint.toStdWString().c_str(), (*newVolume + '\\').toStdWString().c_str()))
     {
       throw MException::MCritical(WinSpd(), GetLastError(), "SetVolumeMountPoint");
+    }
+
+    if (autoPlayEnabled)
+    {
+      QThread::msleep(100); // wait a little for autoplay notifier
     }
   }
   catch (const MException::MCritical &)
