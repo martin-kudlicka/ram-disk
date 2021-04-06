@@ -27,6 +27,9 @@
     <ClInclude Include="log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -38,6 +41,9 @@
     <Filter Include="Interface Files">
       <UniqueIdentifier>{7696fbe7-a734-442a-b351-5223bc55747e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resouce Files">
+      <UniqueIdentifier>{acdd8584-c784-4d86-a639-ae20f9e71b9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="..\storageinterface.h">
@@ -46,5 +52,10 @@
     <QtMoc Include="storage-winspd.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc">
+      <Filter>Resouce Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

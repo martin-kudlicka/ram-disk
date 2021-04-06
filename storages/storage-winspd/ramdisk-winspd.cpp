@@ -71,7 +71,7 @@ void RamDiskWinSpd::start()
 
     if (autoPlayEnabled)
     {
-      QThread::msleep(100); // wait a little for autoplay notifier
+      QThread::msleep(200); // wait a little for system autoplay notifier
     }
   }
   catch (const MException::MCritical &)
