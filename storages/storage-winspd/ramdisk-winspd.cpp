@@ -50,7 +50,7 @@ void RamDiskWinSpd::start()
       return volumesBefore.contains(volumeName);
     });
 
-    MStorage::format(*newVolume, MVolume::FileSystem::FAT32, QCoreApplication::applicationName(), false);
+    MStorage::Volume::format(*newVolume, MVolume::FileSystem::FAT32, QCoreApplication::applicationName(), false);
 
     auto autoPlayEnabled      = MOperatingSystem::Settings::Device::AutoPlay::enabled();
     auto autoPlayEnabledGuard = qScopeGuard([autoPlayEnabled] { MOperatingSystem::Settings::Device::AutoPlay::setEnabled(autoPlayEnabled); });
