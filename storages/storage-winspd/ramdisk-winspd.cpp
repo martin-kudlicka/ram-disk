@@ -26,7 +26,21 @@ void RamDiskWinSpd::start()
   {
     auto volumesBefore = MVolumes::enumerate();
 
-    _bufferDevice->open(QIODevice::ReadWrite);
+    {
+      // automount has to be enabled otherwise format fails
+      auto automountEnabled      = MStorage::Automount::enabled();
+      auto automountEnabledGuard = qScopeGuard([automountEnabled] { MStorage::Automount::setEnabled(automountEnabled); });
+      if (!automountEnabled)
+      {
+        MStorage::Automount::setEnabled(true);
+      }
+      else
+      {
+        automountEnabledGuard.dismiss();
+      }
+
+      _bufferDevice->open(QIODevice::ReadWrite);
+    }
 
     QStringList volumesAfter;
     for (auto run = 0; run < 10; ++run)
