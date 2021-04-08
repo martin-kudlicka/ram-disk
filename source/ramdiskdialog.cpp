@@ -13,6 +13,8 @@ RamDiskDialog::RamDiskDialog(const MUuidPtr &id, QWidget *parent) : QDialog(pare
 
   setupWidgets();
   setupSettings();
+
+  _ui.changesNotice->setVisible(_ui.enabled->isChecked());
 }
 
 const RamDiskOptions &RamDiskDialog::options() const
