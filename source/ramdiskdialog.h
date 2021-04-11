@@ -4,7 +4,7 @@
 #include "ui_ramdiskdialog.h"
 #include "ramdiskoptions.h"
 
-class RamDiskDialog : public QDialog
+class RamDiskDialog : public MOptionsDialog<Ui::RamDiskDialog, RamDiskOptions>
 {
   Q_OBJECT
 
@@ -13,17 +13,9 @@ class RamDiskDialog : public QDialog
              RamDiskDialog(const MUuidPtr &id, QWidget *parent);
     virtual ~RamDiskDialog() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
 
-    const RamDiskOptions &options() const;
-
   private:
-    RamDiskOptions    _options;
-    MWidgetSettings   _widgetSettings;
-    Ui::RamDiskDialog _ui;
-
-    void setupSettings();
-    void setupWidgets ();
-
-    virtual void accept() Q_DECL_OVERRIDE;
+    virtual void setupSettings()       Q_DECL_OVERRIDE;
+    virtual void setupWidgets () const Q_DECL_OVERRIDE;
 };
 
 #endif

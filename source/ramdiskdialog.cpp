@@ -3,23 +3,13 @@
 
 #include "storages.h"
 
-RamDiskDialog::RamDiskDialog(QWidget *parent) : RamDiskDialog(MUuidPtr::createUuid(), parent)
+RamDiskDialog::RamDiskDialog(QWidget *parent) : MOptionsDialog(parent)
 {
 }
 
-RamDiskDialog::RamDiskDialog(const MUuidPtr &id, QWidget *parent) : QDialog(parent), _options(id), _widgetSettings(&_options)
+RamDiskDialog::RamDiskDialog(const MUuidPtr &id, QWidget *parent) : MOptionsDialog(id, parent)
 {
-  _ui.setupUi(this);
-
-  setupWidgets();
-  setupSettings();
-
   _ui.changesNotice->setVisible(_ui.enabled->isChecked());
-}
-
-const RamDiskOptions &RamDiskDialog::options() const
-{
-  return _options;
 }
 
 void RamDiskDialog::setupSettings()
@@ -32,7 +22,7 @@ void RamDiskDialog::setupSettings()
   _widgetSettings.load();
 }
 
-void RamDiskDialog::setupWidgets()
+void RamDiskDialog::setupWidgets() const
 {
   for (auto letter = 'A'; letter <= 'Z'; ++letter)
   {
@@ -44,11 +34,4 @@ void RamDiskDialog::setupWidgets()
   {
     _ui.storage->addItem(storage->name(), storage->name());
   }
-}
-
-void RamDiskDialog::accept()
-{
-  _widgetSettings.save();
-
-  QDialog::accept();
 }
