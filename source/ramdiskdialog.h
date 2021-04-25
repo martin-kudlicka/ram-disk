@@ -14,8 +14,8 @@ class RamDiskDialog : public MOptionsDialog<Ui::RamDiskDialog, RamDiskOptions>
     virtual ~RamDiskDialog() Q_DECL_OVERRIDE Q_DECL_EQ_DEFAULT;
 
   private:
-    virtual void setupSettings()       Q_DECL_OVERRIDE;
-    virtual void setupWidgets () const Q_DECL_OVERRIDE;
+    virtual void setupSettings() Q_DECL_OVERRIDE;
+    virtual void setupWidgets () Q_DECL_OVERRIDE;
 };
 
 #endif

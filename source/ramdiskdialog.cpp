@@ -3,7 +3,7 @@
 
 #include "storages.h"
 
-RamDiskDialog::RamDiskDialog(QWidget *parent) : MOptionsDialog(parent)
+RamDiskDialog::RamDiskDialog(QWidget *parent) : RamDiskDialog(MUuidPtr::createUuid(), parent)
 {
 }
 
@@ -19,10 +19,10 @@ void RamDiskDialog::setupSettings()
   _widgetSettings.setWidget(RamDiskOptions::Property::Size,    _ui.size);
   _widgetSettings.setWidget(RamDiskOptions::Property::Storage, _ui.storage);
 
-  _widgetSettings.load();
+  MOptionsDialog::setupSettings();
 }
 
-void RamDiskDialog::setupWidgets() const
+void RamDiskDialog::setupWidgets()
 {
   for (auto letter = 'A'; letter <= 'Z'; ++letter)
   {
