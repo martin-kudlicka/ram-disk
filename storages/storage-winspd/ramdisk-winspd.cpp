@@ -53,12 +53,10 @@ void RamDiskWinSpd::start()
         break;
       }
     }
-
     if (volumesBefore.count() + 1 != volumesAfter.count())
     {
       throw MException::Critical(WinSpd(), ERROR_MOUNT_POINT_NOT_RESOLVED, "can't find created ram disk volume");
     }
-
     auto newVolume = std::find_if_not(volumesAfter.cbegin(), volumesAfter.cend(), [&volumesBefore](const MStorage::VolumeInfo &volumeAfter)
     {
       auto volume = std::find_if(volumesBefore.cbegin(), volumesBefore.cend(), [&volumeAfter](const MStorage::VolumeInfo &volumeBefore)
@@ -71,26 +69,12 @@ void RamDiskWinSpd::start()
 
     MStorage::Volume(newVolume->name()).format(MStorage::VolumeInfo::FileSystem::FAT32, QCoreApplication::applicationName(), false);
 
-    auto autoPlayEnabled      = MOperatingSystem::Settings::Device::AutoPlay::enabled();
-    auto autoPlayEnabledGuard = qScopeGuard([autoPlayEnabled] { MOperatingSystem::Settings::Device::AutoPlay::setEnabled(autoPlayEnabled); });
-    if (autoPlayEnabled)
-    {
-      MOperatingSystem::Settings::Device::AutoPlay::setEnabled(false);
-    }
-    else
-    {
-      autoPlayEnabledGuard.dismiss();
-    }
+    auto autoPlayHolder = MOperatingSystem::Settings::Device::AutoPlay().hold(false);
 
     _mountPoint = _parameters.drive + '\\';
     if (!SetVolumeMountPoint(_mountPoint.toLPCWStr(), MString(newVolume->name() + '\\').toLPCWStr()))
     {
       throw MException::Critical(WinSpd(), GetLastError(), "SetVolumeMountPoint");
-    }
-
-    if (autoPlayEnabled)
-    {
-      QThread::msleep(200); // wait a little for system autoplay notifier
     }
   }
   catch (const MException::Critical &)
