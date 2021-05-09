@@ -26,21 +26,7 @@ void RamDiskWinSpd::start()
   {
     auto volumesBefore = MStorage::Volume::enumerate();
 
-    {
-      // automount has to be enabled otherwise format fails
-      auto automountEnabled      = MStorage::Automount::enabled();
-      auto automountEnabledGuard = qScopeGuard([automountEnabled] { MStorage::Automount::setEnabled(automountEnabled); });
-      if (!automountEnabled)
-      {
-        MStorage::Automount::setEnabled(true);
-      }
-      else
-      {
-        automountEnabledGuard.dismiss();
-      }
-
-      _bufferDevice->open(QIODevice::ReadWrite);
-    }
+    _bufferDevice->open(QIODevice::ReadWrite);
 
     MStorage::VolumeInfoList volumesAfter;
     for (auto run = 0; run < 10; ++run)
@@ -69,7 +55,7 @@ void RamDiskWinSpd::start()
 
     MStorage::Volume(newVolume->name()).format(MStorage::VolumeInfo::FileSystem::FAT32, QCoreApplication::applicationName(), false);
 
-    auto autoPlayHolder = MOperatingSystem::Settings::Device::AutoPlay().hold(false);
+    MOperatingSystem::Settings::Device::AutoPlayHolder autoPlayHolder(false);
 
     _mountPoint = _parameters.drive + '\\';
     if (!SetVolumeMountPoint(_mountPoint.toLPCWStr(), MString(newVolume->name() + '\\').toLPCWStr()))
