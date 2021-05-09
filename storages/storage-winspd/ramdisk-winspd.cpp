@@ -24,41 +24,14 @@ void RamDiskWinSpd::start()
 
   try
   {
-    auto volumesBefore = MStorage::Volume::enumerate();
-
     _bufferDevice->open(QIODevice::ReadWrite);
 
-    MStorage::VolumeInfoList volumesAfter;
-    for (auto run = 0; run < 10; ++run)
-    {
-      QThread::msleep(100);
-
-      volumesAfter = MStorage::Volume::enumerate();
-      if (volumesAfter.count() > volumesBefore.count())
-      {
-        break;
-      }
-    }
-    if (volumesBefore.count() + 1 != volumesAfter.count())
-    {
-      throw MException::Critical(WinSpd(), ERROR_MOUNT_POINT_NOT_RESOLVED, "can't find created ram disk volume");
-    }
-    auto newVolume = std::find_if_not(volumesAfter.cbegin(), volumesAfter.cend(), [&volumesBefore](const MStorage::VolumeInfo &volumeAfter)
-    {
-      auto volume = std::find_if(volumesBefore.cbegin(), volumesBefore.cend(), [&volumeAfter](const MStorage::VolumeInfo &volumeBefore)
-      {
-        return volumeBefore.name() == volumeAfter.name();
-      });
-
-      return volume != volumesBefore.cend();
-    });
-
-    MStorage::Volume(newVolume->name()).format(MStorage::VolumeInfo::FileSystem::FAT32, QCoreApplication::applicationName(), false);
+    MStorage::Volume(_bufferDevice->volumeName()).format(MStorage::VolumeInfo::FileSystem::FAT32, QCoreApplication::applicationName(), false);
 
     MOperatingSystem::Settings::Device::AutoPlayHolder autoPlayHolder(false);
 
     _mountPoint = _parameters.drive + '\\';
-    if (!SetVolumeMountPoint(_mountPoint.toLPCWStr(), MString(newVolume->name() + '\\').toLPCWStr()))
+    if (!SetVolumeMountPoint(_mountPoint.toLPCWStr(), MString(_bufferDevice->volumeName() + '\\').toLPCWStr()))
     {
       throw MException::Critical(WinSpd(), GetLastError(), "SetVolumeMountPoint");
     }
