@@ -26,7 +26,11 @@ void RamDiskWinSpd::start()
   {
     _bufferDevice->open(QIODevice::ReadWrite);
 
+    mInfoC(WinSpd) << "RAM disk volume " << _bufferDevice->volumeName() << " created";
+
     MStorage::Volume(_bufferDevice->volumeName()).format(MStorage::VolumeInfo::FileSystem::FAT32, QCoreApplication::applicationName(), false);
+
+    mInfoC(WinSpd) << "RAM disk volume " << _bufferDevice->volumeName() << " formatted to FAT32";
 
     MOperatingSystem::Settings::Device::AutoPlayHolder autoPlayHolder(false);
 
@@ -48,6 +52,10 @@ void RamDiskWinSpd::stop()
 {
   DeleteVolumeMountPointW(_mountPoint.toLPCWStr());
 
+  auto ramDiskVolumeName = _bufferDevice->volumeName();
+
   _mountPoint.clear();
   _bufferDevice.reset();
+
+  mInfoC(WinSpd) << "RAM disk volume " << ramDiskVolumeName << " closed";
 }
