@@ -32,13 +32,9 @@ void RamDiskWinSpd::start()
 
     mInfoC(WinSpd) << "RAM disk volume " << _bufferDevice->volumeName() << " formatted to FAT32";
 
-    MOperatingSystem::Settings::Device::AutoPlayHolder autoPlayHolder(false);
+    _bufferDevice->mount({ _parameters.drive + '\\' });
 
-    _mountPoint = _parameters.drive + '\\';
-    if (!SetVolumeMountPoint(_mountPoint.toLPCWStr(), MString(_bufferDevice->volumeName() + '\\').toLPCWStr()))
-    {
-      throw MException::Critical(WinSpd(), GetLastError(), "SetVolumeMountPoint");
-    }
+    mInfoC(WinSpd) << "RAM disk volume " << _bufferDevice->volumeName() << " mounted to " << _parameters.drive;
   }
   catch (const MException::Critical &)
   {
@@ -50,7 +46,9 @@ void RamDiskWinSpd::start()
 
 void RamDiskWinSpd::stop()
 {
-  DeleteVolumeMountPointW(_mountPoint.toLPCWStr());
+  _bufferDevice->unmount();
+
+  mInfoC(WinSpd) << "RAM disk volume " << _bufferDevice->volumeName() << " unmounted from " << _parameters.drive;
 
   auto ramDiskVolumeName = _bufferDevice->volumeName();
 

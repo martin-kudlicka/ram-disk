@@ -57,7 +57,6 @@ bool RamDisk::start()
   catch (const MException::Critical &ex)
   {
     mCriticalEx(ex);
-    mCriticalC(RAMDisk) << "RAM disk \"" << _options.drive() << "\" failed to start";
 
     _ramDisk.clear();
 
@@ -69,9 +68,16 @@ bool RamDisk::start()
 
 void RamDisk::stop()
 {
-  _ramDisk->stop();
+  try
+  {
+    _ramDisk->stop();
 
-  mInfoC(RAMDisk) << "RAM disk \"" << _options.drive() << "\" stopped";
+    mInfoC(RAMDisk) << "RAM disk \"" << _options.drive() << "\" stopped";
+  }
+  catch (const MException::Critical &ex)
+  {
+    mCriticalEx(ex);
+  }
 
   _ramDisk.clear();
 }
