@@ -182,8 +182,14 @@ bool RamDisksModel::setData(const QModelIndex &index, const QVariant &value, int
 
       if (value.toBool())
       {
-        if (!disk->start())
+        try
         {
+          disk->start();
+        }
+        catch (const MException::Critical &ex)
+        {
+          mCriticalEx(ex);
+
           disk->options().setEnabled(false);
         }
       }
@@ -191,7 +197,14 @@ bool RamDisksModel::setData(const QModelIndex &index, const QVariant &value, int
       {
         if (disk->running())
         {
-          disk->stop();
+          try
+          {
+            disk->stop();
+          }
+          catch (const MException::Critical &ex)
+          {
+            mCriticalEx(ex);
+          }
         }
       }
 

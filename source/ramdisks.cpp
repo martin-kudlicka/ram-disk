@@ -11,10 +11,19 @@ RamDisks::RamDisks(RamDisksModel *ramDisksModel) : _ramDisksModel(ramDisksModel)
 
   for (const auto &ramDisk : get())
   {
-    if (ramDisk->options().enabled() && !ramDisk->start())
+    if (ramDisk->options().enabled())
     {
-      ramDisk->options().setEnabled(false);
-      _ramDisksModel->setDataChanged(ramDisk->options().id(), RamDisksModel::Column::Enabled);
+      try
+      {
+        ramDisk->start();
+      }
+      catch (const MException::Critical &ex)
+      {
+        mCriticalEx(ex);
+
+        ramDisk->options().setEnabled(false);
+        _ramDisksModel->setDataChanged(ramDisk->options().id(), RamDisksModel::Column::Enabled);
+      }
     }
   }
 }

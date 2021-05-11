@@ -79,10 +79,19 @@ void MainWindow::on_addRamDisk_clicked(bool checked /* false */)
   _ramDisksModel.insert(ramDiskDialog.options().id());
 
   auto ramDisk = _ramDisksModel.ramDisk(ramDiskDialog.options().id());
-  if (ramDisk->options().enabled() && !ramDisk->start())
+  if (ramDisk->options().enabled())
   {
-    ramDisk->options().setEnabled(false);
-    _ramDisksModel.setDataChanged(ramDisk->options().id(), RamDisksModel::Column::Enabled);
+    try
+    {
+      ramDisk->start();
+    }
+    catch (const MException::Critical &ex)
+    {
+      mCriticalEx(ex);
+
+      ramDisk->options().setEnabled(false);
+      _ramDisksModel.setDataChanged(ramDisk->options().id(), RamDisksModel::Column::Enabled);
+    }
   }
 }
 
@@ -100,7 +109,14 @@ void MainWindow::on_removeRamDisk_clicked(bool checked /* false */)
   auto ramDisk = _ramDisksModel.ramDisk(_ui.disks->currentIndex());
   if (ramDisk->running())
   {
-    ramDisk->stop();
+    try
+    {
+      ramDisk->stop();
+    }
+    catch (const MException::Critical &ex)
+    {
+      mCriticalEx(ex);
+    }
   }
 
   _ramDisksModel.remove(_ui.disks->currentIndex());

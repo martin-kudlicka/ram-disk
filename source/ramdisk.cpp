@@ -26,7 +26,7 @@ bool RamDisk::running() const
   return _ramDisk;
 }
 
-bool RamDisk::start()
+void RamDisk::start()
 {
   for (const auto &storage : gStorages->toRawList())
   {
@@ -43,9 +43,7 @@ bool RamDisk::start()
   }
   if (!_ramDisk)
   {
-    mCriticalC(RAMDisk) << "RAM disk storage \"" << _options.storage() << "\" unavailable";
-
-    return false;
+    throw MException::Critical(RAMDisk(), "RAM disk storage \"" + _options.storage() + "\" unavailable");
   }
 
   try
@@ -60,10 +58,8 @@ bool RamDisk::start()
 
     _ramDisk.clear();
 
-    return false;
+    throw;
   }
-
-  return true;
 }
 
 void RamDisk::stop()
