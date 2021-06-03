@@ -50,11 +50,34 @@ void RamDiskWinSpd::stop()
 
   mInfoC(WinSpd) << "RAM disk volume " << _bufferDevice->volumeName() << " unmounted from " << _parameters.drive;
 
-  auto readBytes  = _bufferDevice->statistics().blocksRead  * _bufferDevice->blockSize();
-  auto readMs     = _bufferDevice->statistics().readMs;
-  auto writeBytes = _bufferDevice->statistics().blocksWritten * _bufferDevice->blockSize();
-  auto writeMs    = _bufferDevice->statistics().writeMs;
-  mInfoC(WinSpd) << "RAM disk volume " << _bufferDevice->volumeName() << " statistics: read " << MUnit::sizeToString(readBytes) << " in " << MUnit::timeToString(readMs, MUnit::Time::milliseconds) << ", written " << MUnit::sizeToString(writeBytes) << " in " << MUnit::timeToString(writeMs, MUnit::Time::milliseconds);
+  auto bytesPerSec = [](quint64 bytes, quintptr timeMs)
+  {
+    if (timeMs == 0)
+    {
+      timeMs = 1;
+    }
+    if (timeMs < 1000)
+    {
+      auto multiplier = 1000.0 / timeMs;
+      bytes          *= multiplier;
+      timeMs         *= multiplier;
+    }
+    if (timeMs > 1000)
+    {
+      auto divider = timeMs / 1000.0;
+      bytes       /= divider;
+      timeMs      /= divider;
+    }
+
+    return bytes;
+  };
+  auto readBytes       = _bufferDevice->statistics().blocksRead  * _bufferDevice->blockSize();
+  auto readMs          = _bufferDevice->statistics().readMs;
+  auto readMbPerSec    = bytesPerSec(readBytes, readMs) / (1024 * 1024);
+  auto writtenBytes    = _bufferDevice->statistics().blocksWritten * _bufferDevice->blockSize();
+  auto writtenMs       = _bufferDevice->statistics().writeMs;
+  auto writtenMbPerSec = bytesPerSec(writtenBytes, writtenMs) / (1024 * 1024);
+  mInfoC(WinSpd) << "RAM disk volume " << _bufferDevice->volumeName() << " statistics: read " << MUnit::sizeToString(readBytes) << " in " << MUnit::timeToString(readMs, MUnit::Time::milliseconds) << " (" << readMbPerSec << " MB/s), written " << MUnit::sizeToString(writtenBytes) << " in " << MUnit::timeToString(writtenMs, MUnit::Time::milliseconds) << " (" << writtenMbPerSec << " MB/s)";
 
   auto ramDiskVolumeName = _bufferDevice->volumeName();
 
