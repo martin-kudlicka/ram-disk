@@ -50,6 +50,12 @@ void RamDiskWinSpd::stop()
 
   mInfoC(WinSpd) << "RAM disk volume " << _bufferDevice->volumeName() << " unmounted from " << _parameters.drive;
 
+  auto readBytes  = _bufferDevice->statistics().blocksRead  * _bufferDevice->blockSize();
+  auto readMs     = _bufferDevice->statistics().readMs;
+  auto writeBytes = _bufferDevice->statistics().blocksWritten * _bufferDevice->blockSize();
+  auto writeMs    = _bufferDevice->statistics().writeMs;
+  mInfoC(WinSpd) << "RAM disk volume " << _bufferDevice->volumeName() << " statistics: read " << MUnit::sizeToString(readBytes) << " in " << MUnit::timeToString(readMs, MUnit::Time::milliseconds) << ", written " << MUnit::sizeToString(writeBytes) << " in " << MUnit::timeToString(writeMs, MUnit::Time::milliseconds);
+
   auto ramDiskVolumeName = _bufferDevice->volumeName();
 
   _mountPoint.clear();
